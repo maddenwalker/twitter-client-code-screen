@@ -6,7 +6,20 @@ TL;DR: Code Screen Creating a Simple Twitter-like Dummy Client
 * Auth required for access to REST API
 * `since_id` parameter may be used to query for just new data
 
-# Example JSON Response
+# User Stories
+
+- [ ] As a user, I want to log in to the application using my twitter credentials
+- [ ] As a user, I want to log out of the application
+- [ ] As a user, I want to see a list of tweets in reverse chronological order
+- [ ] As a user, I want to see a profile picture and name of the person who tweeted
+- [ ] As a user, I want to post a tweet to the stream and see it appended to the top of the list
+- [ ] As a user, I want to set a profile picture (question on whether we implement real API call for profile)
+- [ ] As a user, I want to see new tweets each time I open the app (on the backend I need to only query for new tweets from the API service)
+
+# Designs
+//As of April 19, 2016 TBD
+
+# Example JSON Response [LINK TO DOCS](https://dev.twitter.com/rest/reference/get/statuses/home_timeline "")
 ```
 [
   {
