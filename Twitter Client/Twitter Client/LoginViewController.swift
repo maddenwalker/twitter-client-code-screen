@@ -11,11 +11,22 @@ import UIKit
 let LoginViewControllerDidGetAccessTokenNotification = "LoginViewControllerDidGetAccessTokenNotification";
 
 class LoginViewController: UIViewController {
+    @IBOutlet weak var backgroundFilter: UIView!
+    @IBOutlet weak var webViewBackground: UIWebView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        //Just for fun 🍻
+        if let filePath = NSBundle.mainBundle().pathForResource("trov_bg_login", ofType: "gif") {
+            let animatedGIFURL = NSURL(fileURLWithPath: filePath)
+            let imageWidth = self.view.frame.width * 2 //Scale the image point by pixel
+            let htmlString = "<html><body><img src='\(animatedGIFURL)' width='\(imageWidth)'></body></html>"
+            webViewBackground.userInteractionEnabled = false
+            webViewBackground.scalesPageToFit = true
+            webViewBackground.loadHTMLString(htmlString, baseURL: NSURL())
+        }
+        
     }
 
     override func didReceiveMemoryWarning() {

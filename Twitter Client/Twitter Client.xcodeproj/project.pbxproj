@@ -21,6 +21,7 @@
 		8C3949621CCEA0280010AF0B /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C3949611CCEA0280010AF0B /* LoginViewController.swift */; };
 		8C3949641CCEA3F10010AF0B /* DataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C3949631CCEA3F10010AF0B /* DataSource.swift */; };
 		8CABDB501CCEB0EE0071C47D /* LoginTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CABDB4F1CCEB0EE0071C47D /* LoginTests.swift */; };
+		8CABDB531CCEC6530071C47D /* trov_bg_login.gif in Resources */ = {isa = PBXBuildFile; fileRef = 8CABDB521CCEC6530071C47D /* trov_bg_login.gif */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,6 +62,7 @@
 		8C3949611CCEA0280010AF0B /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		8C3949631CCEA3F10010AF0B /* DataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataSource.swift; sourceTree = "<group>"; };
 		8CABDB4F1CCEB0EE0071C47D /* LoginTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginTests.swift; sourceTree = "<group>"; };
+		8CABDB521CCEC6530071C47D /* trov_bg_login.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = trov_bg_login.gif; sourceTree = "<group>"; };
 		C458D2623C84984EAB2DA03C /* Pods-Twitter Client.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Twitter Client.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Twitter Client/Pods-Twitter Client.debug.xcconfig"; sourceTree = "<group>"; };
 		FDA8AB2281FA30F6ED496F0E /* Pods_Twitter_Client.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Twitter_Client.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -138,6 +140,7 @@
 				8C3949561CCE780C0010AF0B /* Controllers */,
 				8C3949601CCEA0020010AF0B /* Views */,
 				8C39492F1CCE74DE0010AF0B /* Assets.xcassets */,
+				8CABDB511CCEC52A0071C47D /* Images */,
 				8C3949311CCE74DE0010AF0B /* LaunchScreen.storyboard */,
 				8C3949341CCE74DE0010AF0B /* Info.plist */,
 			);
@@ -189,6 +192,14 @@
 				8C39495E1CCE9FF80010AF0B /* LoginView.xib */,
 			);
 			name = Views;
+			sourceTree = "<group>";
+		};
+		8CABDB511CCEC52A0071C47D /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				8CABDB521CCEC6530071C47D /* trov_bg_login.gif */,
+			);
+			name = Images;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -300,6 +311,7 @@
 			files = (
 				8C3949331CCE74DE0010AF0B /* LaunchScreen.storyboard in Resources */,
 				8C3949301CCE74DE0010AF0B /* Assets.xcassets in Resources */,
+				8CABDB531CCEC6530071C47D /* trov_bg_login.gif in Resources */,
 				8C39495F1CCE9FF80010AF0B /* LoginView.xib in Resources */,
 				8C39492E1CCE74DE0010AF0B /* Main.storyboard in Resources */,
 			);
