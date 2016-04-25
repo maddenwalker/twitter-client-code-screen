@@ -36,9 +36,16 @@ class UserTests: XCTestCase {
     
     func testUserCreationWithDirectInit() {
         let user = User(username: "test_username", fullName: "full_name", profilePicture: profilePicture)
-        XCTAssert(user.username == "test_username", "Username not correct, it should be test_username but is \(user.username)")
-        XCTAssert(user.fullName == "full_name", "Full name not correct, it should be full_name but is \(user.fullName)")
-        XCTAssert(user.profilePicture == UIImage(named: "Empty Profile Picture")!, "Profile picture not correct, it should be \(profilePicture) but is \(user.profilePicture)")
+        XCTAssert(user?.username == "test_username", "Username not correct, it should be test_username but is \(user?.username)")
+        XCTAssert(user?.fullName == "full_name", "Full name not correct, it should be full_name but is \(user?.fullName)")
+        XCTAssert(user?.profilePicture == UIImage(named: "Empty Profile Picture")!, "Profile picture not correct, it should be \(profilePicture) but is \(user?.profilePicture)")
+    }
+    
+    func testUserCreationWithDictionary() {
+        let user = User(initWithDictionary: testDictionary)
+        XCTAssert(user?.username == "test_username", "Username not correct, it should be test_username but is \(user?.username)")
+        XCTAssert(user?.fullName == "full_name", "Full name not correct, it should be full_name but is \(user?.fullName)")
+        XCTAssert(user?.profilePicture == UIImage(named: "Empty Profile Picture")!, "Profile picture not correct, it should be \(profilePicture) but is \(user?.profilePicture)")
     }
     
     func testPerformanceExample() {
