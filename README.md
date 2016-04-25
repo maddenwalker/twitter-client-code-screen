@@ -3,7 +3,7 @@ TL;DR: Code Screen Creating a Simple Twitter-like Dummy Client
 
 # Assumptions
 * Response format from Twitter server is JSON
-* Auth required for access to REST API
+* Auth required for access to REST API, would likely use the the Twitter SDK to leverage the system logins as opposed to implemented flow, this is a better user experience as user has already auth'ed their lgoin with the system, and if not it falls back to OAUTH flow
 * `since_id` parameter may be used to query for just new data
 
 # User Stories
