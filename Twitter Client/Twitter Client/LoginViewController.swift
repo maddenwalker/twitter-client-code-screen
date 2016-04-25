@@ -8,6 +8,8 @@
 
 import UIKit
 
+let LoginViewControllerDidGetAccessTokenNotification = "LoginViewControllerDidGetAccessTokenNotification";
+
 class LoginViewController: UIViewController {
 
     override func viewDidLoad() {
@@ -22,7 +24,8 @@ class LoginViewController: UIViewController {
     }
     
     @IBAction func loginButtonTapped(sender: AnyObject) {
-        
+        //We would receive an auth token here that would allow us to pass the variable through the notification center and our app delegate could then see that notification
+        NSNotificationCenter.defaultCenter().postNotificationName(LoginViewControllerDidGetAccessTokenNotification, object: nil)
     }
 
     // MARK: - Navigation
