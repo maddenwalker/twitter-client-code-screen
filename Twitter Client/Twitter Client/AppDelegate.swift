@@ -13,9 +13,29 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
-
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        // Override point for customization after application launch.
+        let dataSource = DataSource.sharedInstance
+        
+        self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
+        
+        //Let's find out if our user is logged in already
+        if !dataSource.userLoggedIn {
+            let loginViewController = LoginViewController()
+            self.window?.rootViewController = loginViewController
+            self.window?.makeKeyAndVisible()
+            
+            NSNotificationCenter.defaultCenter().addObserverForName(LoginViewControllerDidGetAccessTokenNotification, object: nil, queue: nil, usingBlock: { (_) in
+                let mainViewController = ViewController()
+                self.window?.rootViewController = mainViewController
+                self.window?.makeKeyAndVisible()
+            })
+            
+        } else {
+            let mainViewController = ViewController()
+            self.window?.rootViewController = mainViewController
+            self.window?.makeKeyAndVisible()
+        }
+        
         return true
     }
 
