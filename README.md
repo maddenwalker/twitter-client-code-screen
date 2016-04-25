@@ -19,6 +19,10 @@ TL;DR: Code Screen Creating a Simple Twitter-like Dummy Client
 # Designs
 //As of April 19, 2016 TBD
 
+# Third Party Libraries used
+
+* [KeychainAccess](https://github.com/kishikawakatsumi/KeychainAccess "") - Provides wrapper for iOS Keychain
+
 # Example JSON Response [LINK TO DOCS](https://dev.twitter.com/rest/reference/get/statuses/home_timeline "")
 ```
 [
