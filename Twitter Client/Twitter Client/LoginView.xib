@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <viewController id="tHh-u0-nlF" customClass="LoginViewController" customModule="Twitter_Client" customModuleProvider="target">
+            <layoutGuides>
+                <viewControllerLayoutGuide type="top" id="yEl-Zg-C9Y"/>
+                <viewControllerLayoutGuide type="bottom" id="pfs-GU-yXQ"/>
+            </layoutGuides>
+            <view key="view" contentMode="scaleToFill" id="BBY-fk-aCA">
+                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Login to Continue" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sjb-zy-xup">
+                        <rect key="frame" x="234" y="125" width="135" height="21"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="trov_logo" translatesAutoresizingMaskIntoConstraints="NO" id="WKS-HO-l3h">
+                        <rect key="frame" x="218" y="28" width="167" height="65"/>
+                    </imageView>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lbn-YU-jEm">
+                        <rect key="frame" x="216" y="170" width="169" height="30"/>
+                        <color key="backgroundColor" red="0.2206254601" green="0.64755654340000002" blue="0.8599427342" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="169" id="t1f-Me-oqA"/>
+                        </constraints>
+                        <state key="normal" title="Login">
+                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                        <connections>
+                            <action selector="loginButtonTapped:" destination="tHh-u0-nlF" eventType="touchUpInside" id="IzE-JG-hlL"/>
+                        </connections>
+                    </button>
+                </subviews>
+                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                <constraints>
+                    <constraint firstItem="lbn-YU-jEm" firstAttribute="centerX" secondItem="BBY-fk-aCA" secondAttribute="centerX" id="2iC-2G-XJw"/>
+                    <constraint firstItem="WKS-HO-l3h" firstAttribute="trailing" secondItem="lbn-YU-jEm" secondAttribute="trailing" id="C1M-CY-Vpw"/>
+                    <constraint firstItem="lbn-YU-jEm" firstAttribute="top" secondItem="Sjb-zy-xup" secondAttribute="bottom" constant="24" id="EPI-aU-lhl"/>
+                    <constraint firstItem="WKS-HO-l3h" firstAttribute="top" secondItem="yEl-Zg-C9Y" secondAttribute="bottom" constant="8" symbolic="YES" id="VcL-Tk-2zA"/>
+                    <constraint firstItem="WKS-HO-l3h" firstAttribute="centerX" secondItem="Sjb-zy-xup" secondAttribute="centerX" id="eHs-Ds-ZP8"/>
+                    <constraint firstItem="Sjb-zy-xup" firstAttribute="top" secondItem="WKS-HO-l3h" secondAttribute="bottom" constant="32" id="eac-Nd-O6q"/>
+                </constraints>
+            </view>
+            <point key="canvasLocation" x="462" y="49"/>
+        </viewController>
+    </objects>
+    <resources>
+        <image name="trov_logo" width="167" height="65"/>
+    </resources>
+</document>

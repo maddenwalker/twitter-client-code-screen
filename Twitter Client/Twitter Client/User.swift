@@ -6,8 +6,8 @@
 //  Copyright © 2016 Ryan Walker. All rights reserved.
 //
 
-import Foundation
 import UIKit
+import Foundation
 
 enum UserCreationError: ErrorType {
     case InvalidUsername
