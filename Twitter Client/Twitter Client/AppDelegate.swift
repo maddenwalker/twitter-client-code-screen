@@ -17,24 +17,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let dataSource = DataSource.sharedInstance
         
         self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
+        let storyBoard = UIStoryboard.init(name: "Main", bundle: nil)
+        let vc = storyBoard.instantiateInitialViewController() as? UINavigationController
         
         //Let's find out if our user is logged in already
         if !dataSource.userLoggedIn {
             let loginViewController = LoginViewController()
-            self.window?.rootViewController = loginViewController
-            self.window?.makeKeyAndVisible()
+            vc?.setViewControllers([loginViewController], animated: true)
             
             NSNotificationCenter.defaultCenter().addObserverForName(LoginViewControllerDidGetAccessTokenNotification, object: nil, queue: nil, usingBlock: { (_) in
-                let mainViewController = ViewController()
-                self.window?.rootViewController = mainViewController
-                self.window?.makeKeyAndVisible()
+                let tweetStreamTableViewController = TweetStreamTableViewController()
+                vc?.setViewControllers([tweetStreamTableViewController], animated: true)
             })
             
-        } else {
-            let mainViewController = ViewController()
-            self.window?.rootViewController = mainViewController
-            self.window?.makeKeyAndVisible()
         }
+        
+        self.window?.rootViewController = vc
+        self.window?.makeKeyAndVisible()
         
         return true
     }

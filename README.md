@@ -8,7 +8,7 @@ TL;DR: Code Screen Creating a Simple Twitter-like Dummy Client
 
 # User Stories
 
-- [ ] As a user, I want to log in to the application using my twitter credentials
+- [ x ] As a user, I want to log in to the application using my twitter credentials
 - [ ] As a user, I want to log out of the application
 - [ ] As a user, I want to see a list of tweets in reverse chronological order
 - [ ] As a user, I want to see a profile picture and name of the person who tweeted

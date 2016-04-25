@@ -17,9 +17,9 @@
             <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <webView contentMode="scaleAspectFill" translatesAutoresizingMaskIntoConstraints="NO" id="Xp3-gF-DRo">
+                <webView contentMode="scaleAspectFill" scalesPageToFit="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Xp3-gF-DRo">
                     <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                    <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="deviceRGB"/>
+                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                 </webView>
                 <view alpha="0.20000000000000001" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8gZ-I2-t3s">
                     <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
@@ -75,6 +75,8 @@
                 <constraint firstItem="Xp3-gF-DRo" firstAttribute="top" secondItem="8gZ-I2-t3s" secondAttribute="top" id="xmC-Eh-XBu"/>
                 <constraint firstItem="8gZ-I2-t3s" firstAttribute="top" secondItem="BBY-fk-aCA" secondAttribute="top" id="ywM-9w-e1R"/>
             </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <nil key="simulatedTopBarMetrics"/>
         </view>
     </objects>
     <resources>
