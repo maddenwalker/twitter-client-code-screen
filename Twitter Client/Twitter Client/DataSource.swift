@@ -31,9 +31,19 @@ class DataSource: NSObject {
         }
     }
     
+    //MARK: Notification Center
     func registerForAccessToken() {
         NSNotificationCenter.defaultCenter().addObserverForName(LoginViewControllerDidGetAccessTokenNotification, object: nil, queue: nil) { (_) in
+            //In a normal instance I would look for the variable passed here and set that as the access token so we could access that globally
             self.keychain["access token"] = "somerandomstringthatisservingasouraccesstokenfornowuntilwefullyimplement"
+        }
+    }
+    
+    func resetUserLoggedInBool() {
+        if ( keychain["access token"] != nil ) {
+            userLoggedIn = true
+        } else {
+            userLoggedIn = false
         }
     }
     
