@@ -18,8 +18,8 @@ class UserTests: XCTestCase {
     override func setUp() {
         super.setUp()
         
-        testDictionary = [ "username" : "test_username",
-                           "full_name": "full_name",
+        testDictionary = [ "screen_name" : "test_username",
+                           "name": "full_name",
                            "profile_picture": profilePicture]
 
     }

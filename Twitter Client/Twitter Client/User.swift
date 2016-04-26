@@ -8,6 +8,7 @@
 
 import UIKit
 import Foundation
+import SwiftyJSON
 
 enum UserCreationError: ErrorType {
     case InvalidUsername
@@ -31,20 +32,21 @@ class User: NSObject, NSCoding, UserType {
         self.username = username
         self.fullName = fullName
         self.profilePicture = profilePicture
-        super.init()
+//        super.init()
     }
     
-    convenience init?(initWithDictionary userDictionary: Dictionary<String, AnyObject>) {
-        guard let username = userDictionary["username"] as? String else { return nil }
-        guard let fullName = userDictionary["full_name"] as? String else { return nil }
-        guard let profilePicture = userDictionary["profile_picture"] as? UIImage else { return nil }
+    convenience init?(initWithDictionary userDictionary: NSDictionary) {
+        guard let username = userDictionary["screen_name"] as? String else { UserCreationError.InvalidUsername; return nil}
+        guard let fullName = userDictionary["name"] as? String else { UserCreationError.InvalidFullname; return nil }
+        //Initializing with dummy data here; would normally request image from API using NSURL 
+        guard let profilePicture = UIImage(named: "Empty Profile Picture") else { UserCreationError.InvalidProfilePicture; return nil }
         
         self.init(username: username, fullName: fullName, profilePicture: profilePicture)
     }
     
     required init?(coder aDecoder: NSCoder) {
-        guard let username = aDecoder.decodeObjectForKey("username") as? String else { UserCreationError.InitializationFromCoderInvalid; return nil}
-        guard let fullName = aDecoder.decodeObjectForKey("full_name") as? String else { UserCreationError.InitializationFromCoderInvalid; return nil }
+        guard let username = aDecoder.decodeObjectForKey("screen_name") as? String else { UserCreationError.InitializationFromCoderInvalid; return nil}
+        guard let fullName = aDecoder.decodeObjectForKey("name") as? String else { UserCreationError.InitializationFromCoderInvalid; return nil }
         guard let profilePicture = aDecoder.decodeObjectForKey("profile_picture") as? UIImage else { UserCreationError.InitializationFromCoderInvalid; return nil }
         
         self.username = username
@@ -53,8 +55,8 @@ class User: NSObject, NSCoding, UserType {
     }
     
     func encodeWithCoder(aCoder: NSCoder) {
-        aCoder.encodeObject(self.username, forKey: "username")
-        aCoder.encodeObject(self.fullName, forKey: "full_Name")
+        aCoder.encodeObject(self.username, forKey: "screen_name")
+        aCoder.encodeObject(self.fullName, forKey: "name")
         aCoder.encodeObject(self.profilePicture, forKey: "profile_picture")
     }
 

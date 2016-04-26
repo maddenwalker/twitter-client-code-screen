@@ -12,22 +12,19 @@ import XCTest
 class TweetTests: XCTestCase {
     
     let profilePicture: UIImage = UIImage(named: "Empty Profile Picture")!
+    var testUserDictionary: Dictionary <String, AnyObject> = [:]
     var testDictionary: Dictionary <String, AnyObject> = [:]
     let tweet = "This is a tweet"
-    let since_id = 12345
-    var user: User!
+    let id = 12345
     
     override func setUp() {
         super.setUp()
-        let testUserDictionary = [ "username" : "test_username",
-                           "full_name": "full_name",
-                           "profile_picture": profilePicture]
-        
-        self.user = User(initWithDictionary: testUserDictionary)
+        testUserDictionary = [ "screen_name" : "test_username",
+                           "name": "full_name"]
 
-        testDictionary = [ "tweet" : tweet,
-                           "user" : self.user,
-                           "since_id" : since_id]
+        testDictionary = [ "text" : tweet,
+                           "user" : testUserDictionary,
+                           "id" : id]
         
     }
     
@@ -37,17 +34,18 @@ class TweetTests: XCTestCase {
     }
     
     func testTweetCreationWithDirectInit() {
-        let tweet = Tweet(tweet: self.tweet, user: self.user, since_id: self.since_id)
+        let user = User(initWithDictionary: testUserDictionary)
+        let tweet = Tweet(tweet: self.tweet, user: user!, id: self.id)
         XCTAssert(tweet?.tweet == self.tweet, "Tweet not correct, it should be \(self.tweet) but is \(tweet?.tweet)")
-        XCTAssert(tweet?.user == self.user, "User not correct, it is \(tweet?.user)")
-        XCTAssert(tweet?.since_id == self.since_id, "Since ID not correct, it should be \(self.since_id) but is \(tweet?.since_id)")
+        XCTAssert(tweet?.user == user, "User not correct, it is \(tweet?.user)")
+        XCTAssert(tweet?.id == self.id, "Since ID not correct, it should be \(self.id) but is \(tweet?.id)")
     }
     
     func testUserCreationWithDictionary() {
         let tweet = Tweet(initWithDictionary: testDictionary)
         XCTAssert(tweet?.tweet == self.tweet, "Tweet not correct, it should be \(self.tweet) but is \(tweet?.tweet)")
-        XCTAssert(tweet?.user == self.user, "User not correct, it is \(tweet?.user)")
-        XCTAssert(tweet?.since_id == self.since_id, "Since ID not correct, it should be \(self.since_id) but is \(tweet?.since_id)")
+        XCTAssert(tweet?.user.fullName == "full_name", "User not correct, it is \(tweet?.user.fullName)")
+        XCTAssert(tweet?.id == self.id, "ID not correct, it should be \(self.id) but is \(tweet?.id)")
     }
     
     
