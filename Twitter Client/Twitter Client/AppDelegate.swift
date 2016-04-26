@@ -12,30 +12,32 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    var navVC: UINavigationController?
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         let dataSource = DataSource.sharedInstance
         
         self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
         
+        let storyBoard = UIStoryboard.init(name: "Main", bundle: nil)
+        navVC = storyBoard.instantiateInitialViewController() as? UINavigationController
+        
         //Let's find out if our user is logged in already
-        if !dataSource.userLoggedIn {
+        if dataSource.userLoggedIn {
+            if let navVC = navVC {
+                self.window?.rootViewController = navVC
+            }
+        } else {
             let loginViewController = LoginViewController()
             self.window?.rootViewController = loginViewController
-            self.window?.makeKeyAndVisible()
             
             NSNotificationCenter.defaultCenter().addObserverForName(LoginViewControllerDidGetAccessTokenNotification, object: nil, queue: nil, usingBlock: { (_) in
-                let mainViewController = ViewController()
-                self.window?.rootViewController = mainViewController
-                self.window?.makeKeyAndVisible()
+//                let tweetVC = TweetStreamTableViewController()
+//                self.navVC?.setViewControllers([tweetVC], animated: true)
+                self.window?.rootViewController = self.navVC
             })
-            
-        } else {
-            let mainViewController = ViewController()
-            self.window?.rootViewController = mainViewController
-            self.window?.makeKeyAndVisible()
         }
-        
+        self.window?.makeKeyAndVisible()
         return true
     }
 

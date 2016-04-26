@@ -16,6 +16,9 @@ class LoginViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        //Hide the navigation controller's bar for this one view
+        navigationController?.navigationBar.hidden = true
 
         //Just for fun 🍻
         if let filePath = NSBundle.mainBundle().pathForResource("trov_bg_login", ofType: "gif") {
@@ -38,13 +41,11 @@ class LoginViewController: UIViewController {
         //We would receive an auth token here that would allow us to pass the variable through the notification center and our app delegate could then see that notification
         NSNotificationCenter.defaultCenter().postNotificationName(LoginViewControllerDidGetAccessTokenNotification, object: nil)
     }
-
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    
+    //MARK: - Working with the Status Bar Appearance
+    
+    override func prefersStatusBarHidden() -> Bool {
+        return true
     }
 
 }
