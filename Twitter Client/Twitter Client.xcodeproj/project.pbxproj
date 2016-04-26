@@ -22,6 +22,7 @@
 		8CABDB501CCEB0EE0071C47D /* LoginTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CABDB4F1CCEB0EE0071C47D /* LoginTests.swift */; };
 		8CABDB531CCEC6530071C47D /* trov_bg_login.gif in Resources */ = {isa = PBXBuildFile; fileRef = 8CABDB521CCEC6530071C47D /* trov_bg_login.gif */; };
 		8CABDB551CCECF9A0071C47D /* TweetStreamTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CABDB541CCECF9A0071C47D /* TweetStreamTableViewController.swift */; };
+		8CD7C0C91CCF116700DD6375 /* MWTweetTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CD7C0C81CCF116700DD6375 /* MWTweetTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,6 +64,7 @@
 		8CABDB4F1CCEB0EE0071C47D /* LoginTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginTests.swift; sourceTree = "<group>"; };
 		8CABDB521CCEC6530071C47D /* trov_bg_login.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = trov_bg_login.gif; sourceTree = "<group>"; };
 		8CABDB541CCECF9A0071C47D /* TweetStreamTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TweetStreamTableViewController.swift; sourceTree = "<group>"; };
+		8CD7C0C81CCF116700DD6375 /* MWTweetTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MWTweetTableViewCell.swift; sourceTree = "<group>"; };
 		C458D2623C84984EAB2DA03C /* Pods-Twitter Client.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Twitter Client.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Twitter Client/Pods-Twitter Client.debug.xcconfig"; sourceTree = "<group>"; };
 		FDA8AB2281FA30F6ED496F0E /* Pods_Twitter_Client.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Twitter_Client.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -189,6 +191,7 @@
 			isa = PBXGroup;
 			children = (
 				8C39492C1CCE74DE0010AF0B /* Main.storyboard */,
+				8CD7C0C81CCF116700DD6375 /* MWTweetTableViewCell.swift */,
 				8C39495E1CCE9FF80010AF0B /* LoginView.xib */,
 			);
 			name = Views;
@@ -389,6 +392,7 @@
 				8C3949621CCEA0280010AF0B /* LoginViewController.swift in Sources */,
 				8C3949291CCE74DE0010AF0B /* AppDelegate.swift in Sources */,
 				8C3949641CCEA3F10010AF0B /* DataSource.swift in Sources */,
+				8CD7C0C91CCF116700DD6375 /* MWTweetTableViewCell.swift in Sources */,
 				8C3949591CCE782F0010AF0B /* User.swift in Sources */,
 				8CABDB551CCECF9A0071C47D /* TweetStreamTableViewController.swift in Sources */,
 			);
