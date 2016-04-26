@@ -24,7 +24,12 @@ class TweetStreamTableViewController: UITableViewController {
     }
     
     @IBAction func logoutButtonTapped() {
-        
+        DataSource.sharedInstance.logUserOut {
+            guard let appDelegate: AppDelegate = UIApplication.sharedApplication().delegate as? AppDelegate else { return }
+            let loginVC = LoginViewController()
+            appDelegate.window?.rootViewController = loginVC
+            appDelegate.window?.makeKeyAndVisible()
+        }
     }
     
 

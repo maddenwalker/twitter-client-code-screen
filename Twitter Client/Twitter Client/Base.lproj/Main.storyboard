@@ -5,10 +5,10 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
     </dependencies>
     <scenes>
-        <!--tweetStream-->
+        <!--tweetStreamVC-->
         <scene sceneID="i2O-73-zRW">
             <objects>
-                <tableViewController title="tweetStream" id="Y8q-V7-yL4" customClass="TweetStreamTableViewController" customModule="Twitter_Client" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController title="tweetStreamVC" id="Y8q-V7-yL4" customClass="TweetStreamTableViewController" customModule="Twitter_Client" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="pRC-OR-p5X">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
