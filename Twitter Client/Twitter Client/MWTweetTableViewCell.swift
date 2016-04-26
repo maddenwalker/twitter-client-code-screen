@@ -9,18 +9,12 @@
 import UIKit
 
 protocol TweetTableViewType {
-    var tweet: String? { get }
-    var username: String? { get }
-    var profilePicture: UIImage? { get }
-    var since_id: Int? { get }
+    var tweetLabel: UILabel { get set }
+    var usernameLabel: UILabel { get set }
+    var profilePictureImageView: UIImageView { get set }
 }
 
 class MWTweetTableViewCell: UITableViewCell {
-    
-    var tweet: String?
-    var username: String?
-    var profilePicture: UIImage?
-    var since_id: Int?
     
     var tweetLabel: UILabel
     var usernameLabel: UILabel
@@ -69,6 +63,12 @@ class MWTweetTableViewCell: UITableViewCell {
         tweetLabel.rightAnchor.constraintEqualToAnchor(self.rightAnchor, constant: 8)
         tweetLabel.bottomAnchor.constraintEqualToAnchor(self.bottomAnchor, constant: 8)
         
+    }
+    
+    func setTweetItem(tweet: Tweet) {
+        self.tweetLabel.text = tweet.tweet
+        self.usernameLabel.text = tweet.user.username
+        self.profilePictureImageView.image = tweet.user.profilePicture
     }
 
 }
