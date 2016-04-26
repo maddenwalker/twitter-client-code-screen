@@ -8,8 +8,8 @@ TL;DR: Code Screen Creating a Simple Twitter-like Dummy Client
 
 # User Stories
 
-- [ x ] As a user, I want to log in to the application using my twitter credentials
-- [ ] As a user, I want to log out of the application
+- [x] As a user, I want to log in to the application using my twitter credentials
+- [x] As a user, I want to log out of the application
 - [ ] As a user, I want to see a list of tweets in reverse chronological order
 - [ ] As a user, I want to see a profile picture and name of the person who tweeted
 - [ ] As a user, I want to post a tweet to the stream and see it appended to the top of the list
@@ -21,7 +21,9 @@ TL;DR: Code Screen Creating a Simple Twitter-like Dummy Client
 
 # Third Party Libraries used
 
+* [Alamofire](https://github.com/Alamofire/Alamofire "") - I did not actually use this because it is a dummy client, but would in a real situation as it is the defacto networking package for Swift
 * [KeychainAccess](https://github.com/kishikawakatsumi/KeychainAccess "") - Provides wrapper for iOS Keychain
+* [SwiftyJSON](https://github.com/SwiftyJSON/SwiftyJSON "") - Provides better support for unwrapping JSON objects
 
 # Example JSON Response [LINK TO DOCS](https://dev.twitter.com/rest/reference/get/statuses/home_timeline "")
 ```

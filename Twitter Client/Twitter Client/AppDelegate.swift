@@ -13,9 +13,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     var navVC: UINavigationController?
+    let dataSource = DataSource.sharedInstance
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        let dataSource = DataSource.sharedInstance
         
         self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
         
@@ -30,13 +30,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         } else {
             let loginViewController = LoginViewController()
             self.window?.rootViewController = loginViewController
-            
-            NSNotificationCenter.defaultCenter().addObserverForName(LoginViewControllerDidGetAccessTokenNotification, object: nil, queue: nil, usingBlock: { (_) in
-//                let tweetVC = TweetStreamTableViewController()
-//                self.navVC?.setViewControllers([tweetVC], animated: true)
-                self.window?.rootViewController = self.navVC
-            })
+            addObserverForLoginButtonPress()
         }
+        
         self.window?.makeKeyAndVisible()
         return true
     }
@@ -61,6 +57,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationWillTerminate(application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+    }
+    
+    func addObserverForLoginButtonPress() {
+        NSNotificationCenter.defaultCenter().addObserverForName(LoginViewControllerDidGetAccessTokenNotification, object: nil, queue: nil, usingBlock: { (_) in
+            self.window?.rootViewController = self.navVC
+        })
     }
 
 

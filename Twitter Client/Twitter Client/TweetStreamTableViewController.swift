@@ -9,13 +9,18 @@
 import UIKit
 
 class TweetStreamTableViewController: UITableViewController {
+    
+    let dataSource = DataSource.sharedInstance
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         //Make sure we show the navigation bar
         navigationController?.navigationBar.hidden = false
+        self.title = "Your Awesome Tweet Feed"
+        self.tableView.tableFooterView = UIView(frame: CGRectZero) //Get rid of the separators between empty cells
+        self.tableView.separatorColor = UIColor.lightGrayColor() //Make the separators less intrusive
         
+        self.tableView.registerClass(MWTweetTableViewCell.self, forCellReuseIdentifier: "tweetCell")
     }
 
     override func didReceiveMemoryWarning() {
@@ -25,10 +30,12 @@ class TweetStreamTableViewController: UITableViewController {
     
     @IBAction func logoutButtonTapped() {
         DataSource.sharedInstance.logUserOut {
+            //This is debatable utilizing the appdelegate to dictate application state here; however, in this scenario it worked the best
             guard let appDelegate: AppDelegate = UIApplication.sharedApplication().delegate as? AppDelegate else { return }
             let loginVC = LoginViewController()
             appDelegate.window?.rootViewController = loginVC
             appDelegate.window?.makeKeyAndVisible()
+            appDelegate.addObserverForLoginButtonPress()
         }
     }
     
@@ -37,67 +44,27 @@ class TweetStreamTableViewController: UITableViewController {
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 0
+        return 1
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return 0
+        return dataSource.tweetItems.count
     }
 
-    /*
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("reuseIdentifier", forIndexPath: indexPath)
-
-        // Configure the cell...
-
+    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> MWTweetTableViewCell {
+        let cell: MWTweetTableViewCell = tableView.dequeueReusableCellWithIdentifier("tweetCell", forIndexPath: indexPath) as! MWTweetTableViewCell
+        cell.setTweetItem(dataSource.tweetItems[indexPath.row])
         return cell
     }
-    */
-
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
+    
+    //We need to estimate the height of these cells based on the size of the tweet
+    override func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return 100
     }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        if editingStyle == .Delete {
-            // Delete the row from the data source
-            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-        } else if editingStyle == .Insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
+    
+    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        let optimalHeight = MWTweetTableViewCell.heightForTweetItem(dataSource.tweetItems[indexPath.row], andWidth: CGRectGetWidth(self.view.frame))
+        return optimalHeight
     }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

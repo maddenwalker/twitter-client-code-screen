@@ -5,7 +5,9 @@ use_frameworks!
 
 target 'Twitter Client' do
 
+  #pod 'Alamofire', '~> 3.3'
   pod 'KeychainAccess'
+  pod 'SwiftyJSON', :git => 'https://github.com/SwiftyJSON/SwiftyJSON.git'
 
 end
 
