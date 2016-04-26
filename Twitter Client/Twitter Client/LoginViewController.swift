@@ -25,6 +25,7 @@ class LoginViewController: UIViewController {
             let animatedGIFURL = NSURL(fileURLWithPath: filePath)
             let imageWidth = self.view.frame.width * 2 //Scale the image point by pixel
             let htmlString = "<html><body><img src='\(animatedGIFURL)' width='\(imageWidth)'></body></html>"
+            webViewBackground.opaque = false
             webViewBackground.userInteractionEnabled = false
             webViewBackground.scalesPageToFit = true
             webViewBackground.loadHTMLString(htmlString, baseURL: NSURL())

@@ -30,10 +30,12 @@ class TweetStreamTableViewController: UITableViewController {
     
     @IBAction func logoutButtonTapped() {
         DataSource.sharedInstance.logUserOut {
+            //This is debatable utilizing the appdelegate to dictate application state here; however, in this scenario it worked the best
             guard let appDelegate: AppDelegate = UIApplication.sharedApplication().delegate as? AppDelegate else { return }
             let loginVC = LoginViewController()
             appDelegate.window?.rootViewController = loginVC
             appDelegate.window?.makeKeyAndVisible()
+            appDelegate.addObserverForLoginButtonPress()
         }
     }
     

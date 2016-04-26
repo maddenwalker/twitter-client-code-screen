@@ -65,6 +65,13 @@ class DataSource: NSObject {
     func logUserOut(completion: () -> Void ) {
         self.keychain["access token"] = nil
         self.userLoggedIn = false
+        if let filePath = pathForFileName("tweetItems") {
+            do {
+                try NSFileManager.defaultManager().removeItemAtPath(filePath)
+            } catch {
+                print("Could not delete your data for some reason; error: \(error)")
+            }
+        }
         completion()
     }
     

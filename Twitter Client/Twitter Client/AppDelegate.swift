@@ -30,11 +30,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         } else {
             let loginViewController = LoginViewController()
             self.window?.rootViewController = loginViewController
-            
-            NSNotificationCenter.defaultCenter().addObserverForName(LoginViewControllerDidGetAccessTokenNotification, object: nil, queue: nil, usingBlock: { (_) in
-                self.window?.rootViewController = self.navVC
-            })
+            addObserverForLoginButtonPress()
         }
+        
         self.window?.makeKeyAndVisible()
         return true
     }
@@ -59,6 +57,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationWillTerminate(application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+    }
+    
+    func addObserverForLoginButtonPress() {
+        NSNotificationCenter.defaultCenter().addObserverForName(LoginViewControllerDidGetAccessTokenNotification, object: nil, queue: nil, usingBlock: { (_) in
+            self.window?.rootViewController = self.navVC
+        })
     }
 
 
