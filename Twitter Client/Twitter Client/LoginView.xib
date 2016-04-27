@@ -8,6 +8,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LoginViewController" customModule="Twitter_Client" customModuleProvider="target">
             <connections>
                 <outlet property="backgroundFilter" destination="8gZ-I2-t3s" id="UNw-cR-mu4"/>
+                <outlet property="usernameTextField" destination="Rr9-xw-8wM" id="ZhI-zK-kpe"/>
                 <outlet property="view" destination="BBY-fk-aCA" id="tnl-fh-IUp"/>
                 <outlet property="webViewBackground" destination="Xp3-gF-DRo" id="vQO-hw-B8p"/>
             </connections>
@@ -38,8 +39,11 @@
                             <rect key="frame" x="77" y="74" width="167" height="65"/>
                         </imageView>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lbn-YU-jEm">
-                            <rect key="frame" x="76" y="215" width="169" height="30"/>
+                            <rect key="frame" x="75" y="258" width="169" height="30"/>
                             <color key="backgroundColor" red="0.2206254601" green="0.64755654340000002" blue="0.8599427342" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="169" id="aOP-cy-eef"/>
+                            </constraints>
                             <state key="normal" title="Login">
                                 <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
@@ -47,18 +51,34 @@
                                 <action selector="loginButtonTapped:" destination="-1" eventType="touchUpInside" id="Inj-Y4-RR2"/>
                             </connections>
                         </button>
+                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Rr9-xw-8wM">
+                            <rect key="frame" x="75" y="199" width="169" height="30"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textInputTraits key="textInputTraits" returnKeyType="done"/>
+                        </textField>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="username" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wJb-Ly-Dpe">
+                            <rect key="frame" x="83" y="229" width="51.5" height="14.5"/>
+                            <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="12"/>
+                            <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="0.0" colorSpace="calibratedWhite"/>
                     <constraints>
-                        <constraint firstItem="lbn-YU-jEm" firstAttribute="leading" secondItem="TtE-nk-Ogo" secondAttribute="leading" constant="76" id="CT3-I5-N46"/>
-                        <constraint firstItem="lbn-YU-jEm" firstAttribute="top" secondItem="Sjb-zy-xup" secondAttribute="bottom" constant="24" id="LIp-SY-gLo"/>
-                        <constraint firstAttribute="bottom" secondItem="lbn-YU-jEm" secondAttribute="bottom" constant="75" id="PS8-JX-tga"/>
+                        <constraint firstItem="Rr9-xw-8wM" firstAttribute="top" secondItem="Sjb-zy-xup" secondAttribute="bottom" constant="8" id="0B4-K4-hRs"/>
+                        <constraint firstAttribute="bottom" secondItem="lbn-YU-jEm" secondAttribute="bottom" constant="32" id="3O1-Y3-Ldb"/>
+                        <constraint firstItem="wJb-Ly-Dpe" firstAttribute="leading" secondItem="Rr9-xw-8wM" secondAttribute="leading" constant="8" id="9rc-Oy-Sc8"/>
                         <constraint firstItem="Sjb-zy-xup" firstAttribute="top" secondItem="WKS-HO-l3h" secondAttribute="bottom" constant="32" id="Rqu-Ho-mLx"/>
+                        <constraint firstItem="wJb-Ly-Dpe" firstAttribute="top" secondItem="Rr9-xw-8wM" secondAttribute="bottom" id="YG2-OB-NUy"/>
                         <constraint firstItem="WKS-HO-l3h" firstAttribute="centerX" secondItem="Sjb-zy-xup" secondAttribute="centerX" id="YgI-kJ-DZC"/>
                         <constraint firstItem="Sjb-zy-xup" firstAttribute="centerX" secondItem="lbn-YU-jEm" secondAttribute="centerX" id="aIU-Ui-UtJ"/>
                         <constraint firstItem="WKS-HO-l3h" firstAttribute="top" secondItem="TtE-nk-Ogo" secondAttribute="top" constant="74" id="aX4-Lg-bso"/>
+                        <constraint firstItem="Rr9-xw-8wM" firstAttribute="centerX" secondItem="TtE-nk-Ogo" secondAttribute="centerX" id="d3t-ft-nHF"/>
                         <constraint firstItem="WKS-HO-l3h" firstAttribute="centerX" secondItem="TtE-nk-Ogo" secondAttribute="centerX" id="fVD-FA-BZ0"/>
+                        <constraint firstItem="Rr9-xw-8wM" firstAttribute="width" secondItem="lbn-YU-jEm" secondAttribute="width" id="hKl-21-pBC"/>
                         <constraint firstItem="WKS-HO-l3h" firstAttribute="leading" secondItem="TtE-nk-Ogo" secondAttribute="leading" constant="77" id="kAV-x2-jbB"/>
+                        <constraint firstItem="lbn-YU-jEm" firstAttribute="centerX" secondItem="TtE-nk-Ogo" secondAttribute="centerX" id="mBg-eD-fLT"/>
+                        <constraint firstItem="lbn-YU-jEm" firstAttribute="top" secondItem="Rr9-xw-8wM" secondAttribute="bottom" constant="29" id="sHX-t0-7Mi"/>
                     </constraints>
                 </view>
             </subviews>

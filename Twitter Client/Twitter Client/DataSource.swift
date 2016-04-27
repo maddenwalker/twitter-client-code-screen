@@ -21,6 +21,7 @@ class DataSource: NSObject {
     var tweetItems: [Tweet] = []
     static let sharedInstance = DataSource()
     
+    var currentUser: User?
     var userLoggedIn: Bool = false
     var keychain: Keychain
     
@@ -32,6 +33,13 @@ class DataSource: NSObject {
         
         if ( keychain["access token"] != nil ) {
             userLoggedIn = true
+            
+            if let fullPath = pathForFileName("userItem") {
+                if let user = NSKeyedUnarchiver.unarchiveObjectWithFile(fullPath) as? User {
+                    self.currentUser = user
+                }
+            }
+            
             //Load existing tweets
             if let fullPath = pathForFileName("tweetItems") {
                 if let savedTweets = NSKeyedUnarchiver.unarchiveObjectWithFile(fullPath) as? [Tweet] {
@@ -54,10 +62,13 @@ class DataSource: NSObject {
             //In a normal instance I would look for the variable passed here and set that as the access token so we could access that globally
             self.keychain["access token"] = "somerandomstringthatisservingasouraccesstokenfornowuntilwefullyimplement"
             self.userLoggedIn = true
+            self.saveUserInfo()
             self.loadDummyData()
         }
     }
     
+    
+    //MARK: - Working with logged in user
     func resetUserLoggedInBool() {
         userLoggedIn = !userLoggedIn
     }
@@ -73,6 +84,12 @@ class DataSource: NSObject {
             }
         }
         completion()
+    }
+    
+    
+    func updateCurrentUserWith(image: UIImage) {
+        self.currentUser?.profilePicture = image
+        saveUserInfo()
     }
     
     //MARK: - Working with Data
@@ -94,6 +111,12 @@ class DataSource: NSObject {
         }
     }
     
+    //MARK: - Creating Dummmy User
+    
+    func createLoggedInUserWithName(username: String) {
+        currentUser = User(username: username, fullName: "You", profilePicture: UIImage(named: "Empty Profile Picture")!)
+    }
+    
     func loadData(fromFilePath filePath: String) throws -> JSON? {
         guard let jsonData = NSData(contentsOfFile: filePath) else { DataSourceError.CannotReadData; return nil }
         return JSON(data: jsonData)
@@ -109,18 +132,14 @@ class DataSource: NSObject {
             let tweet: Tweet = Tweet(initWithDictionary: dictionary)!
             tweetItems.append(tweet)
         }
+        sortArrayOfTweets()
     }
     
-    func saveItems() {
-        if tweetItems.count > 0 {
-            //Save these to disk
-            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), { 
-                let numberOfItemsToSave = min(self.tweetItems.count, 50)
-                let itemsToSave = Array(self.tweetItems[0..<numberOfItemsToSave])
-                guard let fullPath: String = self.pathForFileName("tweetItems") else { return }
-                NSKeyedArchiver.archiveRootObject(itemsToSave, toFile: fullPath)
-            })
-        }
+    func sortArrayOfTweets() {
+        //This is a good place to sort the data
+        self.tweetItems.sortInPlace({ (tweet1, tweet2) -> Bool in
+            return tweet1.id > tweet2.id
+        })
     }
     
     //MARK: - Working with the file system
@@ -128,7 +147,29 @@ class DataSource: NSObject {
     func pathForFileName(filename: String) -> String? {
         let paths: Array = NSSearchPathForDirectoriesInDomains(.CachesDirectory, .UserDomainMask, true)
         guard let documentsDirectory: String = paths[0] else { return nil }
-        let dataPath = documentsDirectory + filename
+        let dataPath = documentsDirectory + "/\(filename)"
         return dataPath
+    }
+    
+    func saveUserInfo() {
+        if let user = self.currentUser {
+            if let filePath = pathForFileName("userItem") {
+                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
+                    NSKeyedArchiver.archiveRootObject(user, toFile: filePath)
+                })
+            }
+        }
+    }
+    
+    func saveItems() {
+        if tweetItems.count > 0 {
+            //Save these to disk
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
+                let numberOfItemsToSave = min(self.tweetItems.count, 50)
+                let itemsToSave = Array(self.tweetItems[0..<numberOfItemsToSave])
+                guard let fullPath: String = self.pathForFileName("tweetItems") else { return }
+                NSKeyedArchiver.archiveRootObject(itemsToSave, toFile: fullPath)
+            })
+        }
     }
 }
