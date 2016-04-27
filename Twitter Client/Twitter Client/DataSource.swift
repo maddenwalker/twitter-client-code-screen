@@ -126,6 +126,12 @@ class DataSource: NSObject {
     
     //MARK: - Working with Data
     func fetchNewItems(completion: () -> ()) {
+        //Normally I would query the API here in a separate class.  For the purposes of this dummy client, I will simply query the file system repeatedly and load the example new tweet; I would also only use the since_id parameter to fetch only tweets that are newer than what we have already
+        if let mostRecentID = self.tweetItems[0].id {
+            loadNewTweetWithIDGreaterThan(mostRecentID)
+        }
+        
+        completion()
         
     }
     
@@ -142,6 +148,19 @@ class DataSource: NSObject {
     //Simple function to load dummy data here; would be replaced with networking call off main thread
     func loadDummyData() {
         if let JSONFilePath = NSBundle.mainBundle().pathForResource("example_data", ofType: "json") {
+            do {
+                guard let json = try self.loadData(fromFilePath: JSONFilePath) else { return }
+                guard let dictionaryArray = try self.parseJSONIntoDictionaryArray(json) else { return }
+                self.parseDictionaryArrayIntoTweets(dictionaryArray)
+                self.saveItems()
+            } catch {
+                print("\(error)")
+            }
+        }
+    }
+    
+    func loadNewTweetWithIDGreaterThan(id: Int) {
+        if let JSONFilePath = NSBundle.mainBundle().pathForResource("example_new_data", ofType: "json") {
             do {
                 guard let json = try self.loadData(fromFilePath: JSONFilePath) else { return }
                 guard let dictionaryArray = try self.parseJSONIntoDictionaryArray(json) else { return }

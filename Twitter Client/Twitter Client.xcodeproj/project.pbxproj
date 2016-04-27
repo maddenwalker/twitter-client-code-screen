@@ -18,6 +18,7 @@
 		8C39495F1CCE9FF80010AF0B /* LoginView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8C39495E1CCE9FF80010AF0B /* LoginView.xib */; };
 		8C3949621CCEA0280010AF0B /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C3949611CCEA0280010AF0B /* LoginViewController.swift */; };
 		8C3949641CCEA3F10010AF0B /* DataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C3949631CCEA3F10010AF0B /* DataSource.swift */; };
+		8C6176191CD156CE00ED947F /* example_new_data.json in Resources */ = {isa = PBXBuildFile; fileRef = 8C6176181CD156CE00ED947F /* example_new_data.json */; };
 		8C7CCDE11CCFC37B00CC538F /* Tweet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C7CCDE01CCFC37B00CC538F /* Tweet.swift */; };
 		8C7CCDE31CCFC90800CC538F /* trov_bg_login.gif in Resources */ = {isa = PBXBuildFile; fileRef = 8C7CCDE21CCFC90800CC538F /* trov_bg_login.gif */; };
 		8C7CCDE51CCFCBF500CC538F /* TweetTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C7CCDE41CCFCBF500CC538F /* TweetTests.swift */; };
@@ -67,6 +68,7 @@
 		8C39495E1CCE9FF80010AF0B /* LoginView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginView.xib; sourceTree = "<group>"; };
 		8C3949611CCEA0280010AF0B /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		8C3949631CCEA3F10010AF0B /* DataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataSource.swift; sourceTree = "<group>"; };
+		8C6176181CD156CE00ED947F /* example_new_data.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = example_new_data.json; sourceTree = "<group>"; };
 		8C7CCDE01CCFC37B00CC538F /* Tweet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tweet.swift; sourceTree = "<group>"; };
 		8C7CCDE21CCFC90800CC538F /* trov_bg_login.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = trov_bg_login.gif; sourceTree = "<group>"; };
 		8C7CCDE41CCFCBF500CC538F /* TweetTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TweetTests.swift; sourceTree = "<group>"; };
@@ -220,6 +222,7 @@
 		8CABDB511CCEC52A0071C47D /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				8C6176181CD156CE00ED947F /* example_new_data.json */,
 				8C7CCDE61CCFD02400CC538F /* example_data.json */,
 				8C7CCDE21CCFC90800CC538F /* trov_bg_login.gif */,
 			);
@@ -337,6 +340,7 @@
 				8C7CCDE31CCFC90800CC538F /* trov_bg_login.gif in Resources */,
 				8CC36A5C1CD11B4300732CF5 /* ImageAssets.xcassets in Resources */,
 				8C39495F1CCE9FF80010AF0B /* LoginView.xib in Resources */,
+				8C6176191CD156CE00ED947F /* example_new_data.json in Resources */,
 				8C7CCDE71CCFD02400CC538F /* example_data.json in Resources */,
 				8C39492E1CCE74DE0010AF0B /* Main.storyboard in Resources */,
 			);

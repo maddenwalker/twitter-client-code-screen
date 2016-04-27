@@ -1,6 +1,6 @@
 [
 {
-      "text": "This is a bit weird to be honest that I am tweeting in a JSON string",
+      "text": "You wanted a new tweet, here it is",
       "truncated": true,
       "in_reply_to_user_id": null,
       "in_reply_to_status_id": null,
@@ -112,7 +112,7 @@
             "listed_count": 0,
             "profile_background_image_url": "http://a3.twimg.com/a/1300479984/images/themes/theme1/bg.png",
             "description": "watcha doin in my waters?",
-            "screen_name": "Confused in Seattle",
+            "screen_name": "Entirely new to the scene",
             "default_profile": true,
             "verified": false,
             "time_zone": "Hawaii",
@@ -129,7 +129,7 @@
             "favourites_count": 0,
             "created_at": "Tue Oct 06 01:13:17 +0000 2009",
             "profile_link_color": "0084B4",
-            "name": "GG",
+            "name": "Some New Tweet User",
             "show_all_inline_media": false,
             "follow_request_sent": null,
             "geo_enabled": false,
@@ -140,7 +140,7 @@
             "following": null,
             "utc_offset": -36000
       },
-      "id": 54691802283900935,
+      "id": 54691802283900936,
       "coordinates": null,
       "geo": null
 }
