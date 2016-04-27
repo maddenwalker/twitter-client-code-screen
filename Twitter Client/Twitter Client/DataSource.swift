@@ -21,6 +21,7 @@ class DataSource: NSObject {
     var tweetItems: [Tweet] = []
     static let sharedInstance = DataSource()
     
+    var currentUser: User?
     var userLoggedIn: Bool = false
     var keychain: Keychain
     
@@ -32,6 +33,13 @@ class DataSource: NSObject {
         
         if ( keychain["access token"] != nil ) {
             userLoggedIn = true
+            
+            if let fullPath = pathForFileName("userItem") {
+                if let user = NSKeyedUnarchiver.unarchiveObjectWithFile(fullPath) as? User {
+                    self.currentUser = user
+                }
+            }
+            
             //Load existing tweets
             if let fullPath = pathForFileName("tweetItems") {
                 if let savedTweets = NSKeyedUnarchiver.unarchiveObjectWithFile(fullPath) as? [Tweet] {
@@ -78,6 +86,16 @@ class DataSource: NSObject {
     //MARK: - Working with Data
     func fetchNewItems(completion: () -> ()) {
         
+    }
+    
+    func saveUserInfo() {
+        if let user = self.currentUser {
+            if let filePath = pathForFileName("userItem") {
+                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), { 
+                    NSKeyedArchiver.archiveRootObject(user, toFile: filePath)
+                })
+            }
+        }
     }
     
     //Simple function to load dummy data here; would be replaced with networking call off main thread
