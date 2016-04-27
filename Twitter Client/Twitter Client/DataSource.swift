@@ -62,6 +62,7 @@ class DataSource: NSObject {
             //In a normal instance I would look for the variable passed here and set that as the access token so we could access that globally
             self.keychain["access token"] = "somerandomstringthatisservingasouraccesstokenfornowuntilwefullyimplement"
             self.userLoggedIn = true
+            self.saveUserInfo()
             self.loadDummyData()
         }
     }
@@ -112,6 +113,12 @@ class DataSource: NSObject {
         }
     }
     
+    //MARK: - Creating Dummmy User
+    
+    func createLoggedInUserWithName(username: String) {
+        currentUser = User(username: username, fullName: "You", profilePicture: UIImage(named: "Empty Profile Picture")!)
+    }
+    
     func loadData(fromFilePath filePath: String) throws -> JSON? {
         guard let jsonData = NSData(contentsOfFile: filePath) else { DataSourceError.CannotReadData; return nil }
         return JSON(data: jsonData)
@@ -146,7 +153,7 @@ class DataSource: NSObject {
     func pathForFileName(filename: String) -> String? {
         let paths: Array = NSSearchPathForDirectoriesInDomains(.CachesDirectory, .UserDomainMask, true)
         guard let documentsDirectory: String = paths[0] else { return nil }
-        let dataPath = documentsDirectory + filename
+        let dataPath = documentsDirectory + "/\(filename)"
         return dataPath
     }
 }

@@ -3,6 +3,8 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--tweetStreamVC-->
@@ -19,13 +21,13 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" id="bas-ss-X87">
-                        <barButtonItem key="leftBarButtonItem" id="zMA-Ol-NDQ">
-                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="DNX-FJ-3Qq">
-                                <rect key="frame" x="20" y="7" width="48" height="30"/>
+                        <barButtonItem key="leftBarButtonItem" style="done" id="fbP-bq-xMl">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="cjh-8e-fkj">
+                                <rect key="frame" x="20" y="11" width="33" height="22"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Logout"/>
+                                <state key="normal" image="settingsIcon"/>
                                 <connections>
-                                    <action selector="logoutButtonTapped" destination="Y8q-V7-yL4" eventType="touchUpInside" id="Mae-dq-4o2"/>
+                                    <segue destination="yZD-ns-43V" kind="show" id="v8k-L9-WkH"/>
                                 </connections>
                             </button>
                         </barButtonItem>
@@ -34,6 +36,84 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Trs-Xc-KsN" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="652" y="387"/>
+        </scene>
+        <!--Settings View Controller-->
+        <scene sceneID="tyK-QX-f6Z">
+            <objects>
+                <viewController id="yZD-ns-43V" customClass="SettingsViewController" customModule="Twitter_Client" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Pti-tC-K3j"/>
+                        <viewControllerLayoutGuide type="bottom" id="o7l-9B-ooy"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="z8w-yT-Mzn">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="tp7-IS-JOG">
+                                <rect key="frame" x="20" y="72" width="100" height="100"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="100" id="Bnh-me-Ijo"/>
+                                    <constraint firstAttribute="height" constant="100" id="K2G-YR-jSs"/>
+                                    <constraint firstAttribute="width" secondItem="tp7-IS-JOG" secondAttribute="height" multiplier="1:1" id="fRl-i6-Yqo"/>
+                                </constraints>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ukf-e8-fHA">
+                                <rect key="frame" x="55" y="180" width="30" height="30"/>
+                                <state key="normal" title="Edit"/>
+                                <connections>
+                                    <action selector="editButtonTapped" destination="yZD-ns-43V" eventType="touchUpInside" id="aeq-Qg-LKU"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="username" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kRo-Vg-cbs">
+                                <rect key="frame" x="128" y="134.5" width="73" height="21"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0La-Uq-jLm">
+                                <rect key="frame" x="128" y="111.5" width="89" height="21"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XLY-a8-nqe">
+                                <rect key="frame" x="0.0" y="460" width="600" height="30"/>
+                                <state key="normal" title="Logout"/>
+                                <connections>
+                                    <action selector="logoutButtonTapped" destination="yZD-ns-43V" eventType="touchUpInside" id="xCf-eQ-i6u"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <gestureRecognizers/>
+                        <constraints>
+                            <constraint firstItem="kRo-Vg-cbs" firstAttribute="leading" secondItem="0La-Uq-jLm" secondAttribute="leading" id="0MH-gk-Fkv"/>
+                            <constraint firstItem="XLY-a8-nqe" firstAttribute="centerX" secondItem="z8w-yT-Mzn" secondAttribute="centerX" id="7AS-5J-rgc"/>
+                            <constraint firstItem="Ukf-e8-fHA" firstAttribute="top" secondItem="tp7-IS-JOG" secondAttribute="bottom" constant="8" id="Ayt-UZ-VSu"/>
+                            <constraint firstItem="0La-Uq-jLm" firstAttribute="centerY" secondItem="tp7-IS-JOG" secondAttribute="centerY" id="H0A-ZD-xhL"/>
+                            <constraint firstItem="tp7-IS-JOG" firstAttribute="top" secondItem="Pti-tC-K3j" secondAttribute="bottom" constant="8" id="NHG-QS-B9R"/>
+                            <constraint firstItem="0La-Uq-jLm" firstAttribute="leading" secondItem="tp7-IS-JOG" secondAttribute="trailing" constant="8" id="NU9-8F-QTF"/>
+                            <constraint firstItem="o7l-9B-ooy" firstAttribute="top" secondItem="XLY-a8-nqe" secondAttribute="bottom" constant="110" id="Yga-H5-Mn2"/>
+                            <constraint firstItem="Ukf-e8-fHA" firstAttribute="centerX" secondItem="tp7-IS-JOG" secondAttribute="centerX" id="bkX-SY-roc"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="tp7-IS-JOG" secondAttribute="leading" id="kiG-et-fnS"/>
+                            <constraint firstItem="kRo-Vg-cbs" firstAttribute="top" secondItem="0La-Uq-jLm" secondAttribute="bottom" constant="2" id="opR-f5-ou1"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="XLY-a8-nqe" secondAttribute="trailing" constant="-20" id="uz8-t8-HiY"/>
+                            <constraint firstItem="XLY-a8-nqe" firstAttribute="leading" secondItem="z8w-yT-Mzn" secondAttribute="leadingMargin" constant="-20" id="vop-4F-h2m"/>
+                        </constraints>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="N0k-qV-W2z" appends="YES" id="bLp-Gw-qf6"/>
+                        </connections>
+                    </view>
+                    <connections>
+                        <outlet property="profileImageView" destination="tp7-IS-JOG" id="7Sa-Vz-otZ"/>
+                        <outlet property="usernameLabel" destination="kRo-Vg-cbs" id="pvV-wE-AcR"/>
+                        <outlet property="yourNameLabel" destination="0La-Uq-jLm" id="TD3-wD-7iY"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="y4w-km-bLH" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="N0k-qV-W2z"/>
+            </objects>
+            <point key="canvasLocation" x="1322" y="387"/>
         </scene>
         <!--navVC-->
         <scene sceneID="ZA4-Rr-wUg">
@@ -54,4 +134,7 @@
             <point key="canvasLocation" x="-160" y="387"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="settingsIcon" width="21" height="21"/>
+    </resources>
 </document>
