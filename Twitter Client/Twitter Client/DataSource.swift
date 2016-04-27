@@ -16,14 +16,21 @@ enum DataSourceError: ErrorType {
     case CannotReadElementInJSON
 }
 
+//NOTE: I chose this as opposed to KVO because of the inherent one-to-one communication required
+protocol DataSourceDelegate {
+    func tweetItemsDidChange()
+}
+
 class DataSource: NSObject {
 
-    var tweetItems: [Tweet] = []
+    var tweetItems: [Tweet]!
     static let sharedInstance = DataSource()
     
     var currentUser: User?
     var userLoggedIn: Bool = false
     var keychain: Keychain
+    
+    var delegate: DataSourceDelegate?
     
     //Don't let others access this init
     private override init() {
@@ -46,6 +53,9 @@ class DataSource: NSObject {
                     if savedTweets.count > 0 {
                         self.tweetItems = savedTweets
                         //TODO: Request new items here
+                    } else {
+                        //Initialize the array if there are no items
+                        self.tweetItems = []
                     }
                 }
             }
@@ -62,6 +72,7 @@ class DataSource: NSObject {
             //In a normal instance I would look for the variable passed here and set that as the access token so we could access that globally
             self.keychain["access token"] = "somerandomstringthatisservingasouraccesstokenfornowuntilwefullyimplement"
             self.userLoggedIn = true
+            self.tweetItems = []
             self.saveUserInfo()
             self.loadDummyData()
         }
@@ -76,6 +87,8 @@ class DataSource: NSObject {
     func logUserOut(completion: () -> Void ) {
         self.keychain["access token"] = nil
         self.userLoggedIn = false
+        self.tweetItems = []
+        delegate?.tweetItemsDidChange()
         if let filePath = pathForFileName("tweetItems") {
             do {
                 try NSFileManager.defaultManager().removeItemAtPath(filePath)
@@ -89,12 +102,41 @@ class DataSource: NSObject {
     
     func updateCurrentUserWith(image: UIImage) {
         self.currentUser?.profilePicture = image
+        self.delegate?.tweetItemsDidChange()
         saveUserInfo()
+        saveItems()
+    }
+    
+    func createTweetWithText(text: String, withUser user: User) {
+        //This is a hack as the server would add this
+        var newID: Int = 0
+        if let id = self.tweetItems.first?.id {
+            newID = id + 1
+        } else {
+            newID += newID
+        }
+        if let currentUser = self.currentUser {
+            if let tweet = Tweet(tweet: text, user: currentUser, id: newID) {
+                submitNewItems(tweet, completion: {
+                    self.delegate?.tweetItemsDidChange()
+                })
+            }
+        }
     }
     
     //MARK: - Working with Data
     func fetchNewItems(completion: () -> ()) {
         
+    }
+    
+    func submitNewItems(tweet: Tweet, completion: (() -> ())?) {
+        //This is a hack because we would not submit directly to our data source, I would submit to the API, then call a refresh
+        self.tweetItems.append(tweet)
+        sortArrayOfTweets()
+        saveItems()
+        if let completion = completion {
+            completion()
+        }
     }
     
     //Simple function to load dummy data here; would be replaced with networking call off main thread
@@ -114,7 +156,7 @@ class DataSource: NSObject {
     //MARK: - Creating Dummmy User
     
     func createLoggedInUserWithName(username: String) {
-        currentUser = User(username: username, fullName: "You", profilePicture: UIImage(named: "Empty Profile Picture")!)
+        self.currentUser = User(username: username, fullName: "You", profilePicture: UIImage(named: "Empty Profile Picture")!)
     }
     
     func loadData(fromFilePath filePath: String) throws -> JSON? {
@@ -151,6 +193,7 @@ class DataSource: NSObject {
         return dataPath
     }
     
+    
     func saveUserInfo() {
         if let user = self.currentUser {
             if let filePath = pathForFileName("userItem") {
@@ -161,6 +204,8 @@ class DataSource: NSObject {
         }
     }
     
+    
+    //!!!: When I reload these items back into memory they don't retain the original reference to the instance of the current user.  I am not sure why.
     func saveItems() {
         if tweetItems.count > 0 {
             //Save these to disk

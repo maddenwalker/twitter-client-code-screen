@@ -8,15 +8,17 @@
 
 import UIKit
 
-class TweetStreamTableViewController: UITableViewController {
+class TweetStreamTableViewController: UITableViewController, DataSourceDelegate {
     
     let dataSource = DataSource.sharedInstance
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        dataSource.delegate = self
         //Make sure we show the navigation bar
         navigationController?.navigationBar.hidden = false
         self.title = "Your Awesome Tweet Feed"
+        self.navigationController?.navigationBar.barTintColor = trovColorBlue
         self.tableView.tableFooterView = UIView(frame: CGRectZero) //Get rid of the separators between empty cells
         self.tableView.separatorColor = UIColor.lightGrayColor() //Make the separators less intrusive
         
@@ -31,7 +33,6 @@ class TweetStreamTableViewController: UITableViewController {
     // MARK: - Table view data source
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
         return 1
     }
 
@@ -54,5 +55,19 @@ class TweetStreamTableViewController: UITableViewController {
         let optimalHeight = MWTweetTableViewCell.heightForTweetItem(dataSource.tweetItems[indexPath.row], andWidth: CGRectGetWidth(self.view.frame))
         return optimalHeight
     }
+    
+    //MARK: - Handle Button Taps
+    
+    @IBAction func composeButtonTapped() {
+        let tweetComposeController = ComposeViewController()
+        self.presentViewController(tweetComposeController, animated: true, completion: nil)
+    }
+    
+    //MARK: - DataSourceDelegate Methods
+    
+    func tweetItemsDidChange() {
+        self.tableView.reloadData()
+    }
+    
 
 }

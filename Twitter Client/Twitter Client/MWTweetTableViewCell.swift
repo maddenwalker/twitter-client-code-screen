@@ -23,6 +23,7 @@ class MWTweetTableViewCell: UITableViewCell {
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         self.tweetLabel = UILabel()
         self.usernameLabel = UILabel()
+        
         self.profilePictureImageView = UIImageView()
         
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -56,8 +57,6 @@ class MWTweetTableViewCell: UITableViewCell {
         //Setup the sizing of the profile picture
         profilePictureImageView.widthAnchor.constraintEqualToAnchor(margins.widthAnchor, multiplier: ( 1.0 / 8.0 )).active = true
         profilePictureImageView.heightAnchor.constraintEqualToAnchor(profilePictureImageView.widthAnchor, multiplier: 1.0).active = true //Equal width and height
-        profilePictureImageView.layer.cornerRadius = profilePictureImageView.frame.size.height / 2 //to be round
-        profilePictureImageView.layer.masksToBounds = true
         
         //Layout the profile picture
         profilePictureImageView.leftAnchor.constraintEqualToAnchor(margins.leftAnchor).active = true
@@ -80,6 +79,7 @@ class MWTweetTableViewCell: UITableViewCell {
         self.tweetLabel.text = tweet.tweet
         self.usernameLabel.text = tweet.user.username
         self.profilePictureImageView.image = tweet.user.profilePicture
+        roundTheProfileImageView()
     }
     
     //MARK: - Working with layout of the items
@@ -96,6 +96,13 @@ class MWTweetTableViewCell: UITableViewCell {
         let profilePicMaxY = CGRectGetMaxY(layoutCell.profilePictureImageView.frame) + 8
         
         return max(tweetMaxY, profilePicMaxY)
+    }
+    
+    //MARK: - Working with drawing of objects 
+    
+    func roundTheProfileImageView() {
+        self.profilePictureImageView.layer.cornerRadius = profilePictureImageView.frame.size.height / 2 //to be round
+        self.profilePictureImageView.layer.masksToBounds = true
     }
 
 }
