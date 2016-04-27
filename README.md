@@ -3,8 +3,9 @@ TL;DR: Code Screen Creating a Simple Twitter-like Dummy Client
 
 # Assumptions
 * Response format from Twitter server is JSON
-* Auth required for access to REST API, would likely use the the Twitter SDK to leverage the system logins as opposed to implemented flow, this is a better user experience as user has already auth'ed their lgoin with the system, and if not it falls back to OAUTH flow
+* Auth required for access to REST API, would likely use the the Twitter SDK to leverage the system logins as opposed to implemented flow, this is a better user experience as user has already auth'ed their login with the system, and if not it falls back to OAUTH flow
 * `since_id` parameter may be used to query for just new data
+* One assumption that I want to make sure is clear is that I chose to implement different ways of doing things in Xcode. For example, sometimes I use Interface Builder, sometimes I altered views in code.  I did this to show my versatility.  Normally I would consistently use one type of implementation and actually use the best tool for the job (sometimes I like using IB to show others what the app looks like)
 
 # User Stories
 

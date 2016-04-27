@@ -35,6 +35,8 @@ class SettingsViewController: UIViewController, UINavigationControllerDelegate, 
         //Setup the image picker for later use
         imagePickerController = UIImagePickerController()
         imagePickerController.delegate = self
+        
+        //TODO: Setup tap gesture recognizer on ImageView
     }
 
     override func didReceiveMemoryWarning() {

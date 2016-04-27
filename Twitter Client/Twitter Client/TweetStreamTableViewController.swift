@@ -17,6 +17,7 @@ class TweetStreamTableViewController: UITableViewController {
         //Make sure we show the navigation bar
         navigationController?.navigationBar.hidden = false
         self.title = "Your Awesome Tweet Feed"
+        self.navigationController?.navigationBar.barTintColor = UIColor(colorLiteralRed: 17.0 / 255.0, green: 133.0 / 255.0, blue: 208.0 / 255.0, alpha: 1) //Trov Blue
         self.tableView.tableFooterView = UIView(frame: CGRectZero) //Get rid of the separators between empty cells
         self.tableView.separatorColor = UIColor.lightGrayColor() //Make the separators less intrusive
         
@@ -54,5 +55,13 @@ class TweetStreamTableViewController: UITableViewController {
         let optimalHeight = MWTweetTableViewCell.heightForTweetItem(dataSource.tweetItems[indexPath.row], andWidth: CGRectGetWidth(self.view.frame))
         return optimalHeight
     }
+    
+    //MARK: - Handle Button Taps
+    
+    @IBAction func composeButtonTapped() {
+        
+        
+    }
+    
 
 }
