@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SettingsViewController: UIViewController {
+class SettingsViewController: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
 
     @IBOutlet weak var yourNameLabel: UILabel!
     @IBOutlet weak var usernameLabel: UILabel!
@@ -16,17 +16,25 @@ class SettingsViewController: UIViewController {
     
     let sharedInstance = DataSource.sharedInstance
     
+    var imagePickerController: UIImagePickerController!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //Somewhat make the view a little prettier
         profileImageView.layer.cornerRadius = profileImageView.frame.size.height / 2 //make it round
         profileImageView.layer.masksToBounds = true
         
+        //Load user information into the view
         if let currentUser = sharedInstance.currentUser {
             self.usernameLabel.text = currentUser.username
             self.yourNameLabel.text = currentUser.fullName
             self.profileImageView.image = currentUser.profilePicture
         }
+        
+        //Setup the image picker for later use
+        imagePickerController = UIImagePickerController()
+        imagePickerController.delegate = self
     }
 
     override func didReceiveMemoryWarning() {
@@ -37,7 +45,7 @@ class SettingsViewController: UIViewController {
     
     
     @IBAction func editButtonTapped() {
-        //We need to ask for access to photos persmission here and then allow the user to change the current UIImage to users info
+        self.navigationController?.presentViewController(imagePickerController, animated: false, completion: nil)
     }
 
     @IBAction func logoutButtonTapped() {
@@ -50,14 +58,16 @@ class SettingsViewController: UIViewController {
             appDelegate.addObserverForLoginButtonPress()
         }
     }
-    /*
-    // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    //MARK - UIImagePickerControllerDelegate Methods
+    func imagePickerControllerDidCancel(picker: UIImagePickerController) {
+        self.dismissViewControllerAnimated(true, completion: nil)
     }
-    */
+    
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage, editingInfo: [String : AnyObject]?) {
+        self.profileImageView.image = image
+        sharedInstance.updateCurrentUserWith(image)
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
 
 }
