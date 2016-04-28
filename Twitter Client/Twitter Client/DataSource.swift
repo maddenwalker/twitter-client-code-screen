@@ -68,6 +68,7 @@ class DataSource: NSObject {
     
     //MARK: - Working with logged in user
     func loadUserData() {
+        //Load existing user
         if let userFilePath = pathForFileName(ArchivingKeys.UserItem.rawValue) {
             if let user = NSKeyedUnarchiver.unarchiveObjectWithFile(userFilePath) as? User {
                 self.currentUser = user
@@ -83,6 +84,7 @@ class DataSource: NSObject {
                 }
             }
         }
+        
     }
     
     //MARK: - Logout Methods
@@ -182,7 +184,6 @@ class DataSource: NSObject {
     }
     
     //MARK: - Creating Dummmy Data and User
-    
     //Simple function to load dummy data here; would be replaced with networking call off main thread in separate NetworkAPI class
     func loadDummyData() {
         if let JSONFilePath = NSBundle.mainBundle().pathForResource("example_data", ofType: "json") {
@@ -220,16 +221,13 @@ class DataSource: NSObject {
         sortArrayOfTweets()
     }
     
-    
     //MARK: - Working with the file system
-    
     func pathForFileName(filename: String) -> String? {
         let paths: Array = NSSearchPathForDirectoriesInDomains(.CachesDirectory, .UserDomainMask, true)
         guard let documentsDirectory: String = paths[0] else { return nil }
         let dataPath = documentsDirectory + "/\(filename)"
         return dataPath
     }
-    
     
     func saveUserInfo() {
         if let user = self.currentUser {
@@ -241,8 +239,7 @@ class DataSource: NSObject {
         }
     }
     
-    
-    //!!!: When I reload these items back into memory they don't retain the original reference to the instance of the current user.  I am not sure why.
+    //!!!: When I reload these items back into memory they don't retain the original reference to the instance of the current user even though Apple's docs say they would.  I am not sure why, thanks 🍎.  This results in a bug where if you want to change your profile picture in the app after you quit amd relaunch, it will not propogate to your old tweets.  This is only a bug that would be present in this type of scenario where you don't have a central store to access info in the case of a real app accessing the API.  
     func saveItems() {
         if tweetItems.count > 0 {
             //Save these to disk
