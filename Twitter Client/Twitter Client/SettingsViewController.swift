@@ -51,7 +51,6 @@ class SettingsViewController: UIViewController, UINavigationControllerDelegate, 
     }
 
     @IBAction func logoutButtonTapped() {
-        self.navigationController?.popToRootViewControllerAnimated(true)
         sharedInstance.logUserOut {
             //This is debatable utilizing the appdelegate to dictate application state here; however, in this scenario it worked the best
             guard let appDelegate: AppDelegate = UIApplication.sharedApplication().delegate as? AppDelegate else { return }

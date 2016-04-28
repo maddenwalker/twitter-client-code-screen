@@ -17,7 +17,7 @@ class TweetStreamTableViewController: UITableViewController, DataSourceDelegate 
         dataSource.delegate = self
         //Make sure we show the navigation bar
         navigationController?.navigationBar.hidden = false
-        self.title = "Your Awesome Tweet Feed"
+        self.title = "Feed"
         self.navigationController?.navigationBar.barTintColor = trovColorBlue
         self.tableView.tableFooterView = UIView(frame: CGRectZero) //Get rid of the separators between empty cells
         self.tableView.separatorColor = UIColor.lightGrayColor() //Make the separators less intrusive
