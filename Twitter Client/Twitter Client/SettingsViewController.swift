@@ -37,6 +37,7 @@ class SettingsViewController: UIViewController, UINavigationControllerDelegate, 
         imagePickerController = UIImagePickerController()
         imagePickerController.delegate = self
         
+        //Setup and add the tap gesture recognizer to the profile image view
         tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.editButtonTapped))
         profileImageView.addGestureRecognizer(tapGestureRecognizer)
     }

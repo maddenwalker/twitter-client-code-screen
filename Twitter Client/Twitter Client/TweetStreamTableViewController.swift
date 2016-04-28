@@ -15,17 +15,11 @@ class TweetStreamTableViewController: UITableViewController, DataSourceDelegate 
     override func viewDidLoad() {
         super.viewDidLoad()
         dataSource.delegate = self
-        //Make sure we show the navigation bar
-        navigationController?.navigationBar.hidden = false
-        self.title = "Feed"
-        self.navigationController?.navigationBar.barTintColor = trovColorBlue
-        self.tableView.tableFooterView = UIView(frame: CGRectZero) //Get rid of the separators between empty cells
-        self.tableView.separatorColor = UIColor.lightGrayColor() //Make the separators less intrusive
+        setupViews()
         
         //Add support for fetching new items from JSON array with Refresh control
         self.refreshControl = UIRefreshControl()
         self.refreshControl?.addTarget(self, action: #selector(self.refreshControlDidFire(_:)), forControlEvents: .ValueChanged)
-        
         
         self.tableView.registerClass(MWTweetTableViewCell.self, forCellReuseIdentifier: "tweetCell")
     }
@@ -33,6 +27,16 @@ class TweetStreamTableViewController: UITableViewController, DataSourceDelegate 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    //MARK: - Setup View Method
+    func setupViews() {
+        //Make sure we show the navigation bar
+        navigationController?.navigationBar.hidden = false
+        self.title = "Feed"
+        self.navigationController?.navigationBar.barTintColor = trovColorBlue
+        self.tableView.tableFooterView = UIView(frame: CGRectZero) //Get rid of the separators between empty cells
+        self.tableView.separatorColor = UIColor.lightGrayColor() //Make the separators less intrusive
     }
 
     // MARK: - Table view data source
@@ -56,14 +60,18 @@ class TweetStreamTableViewController: UITableViewController, DataSourceDelegate 
     }
     
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        let optimalHeight = MWTweetTableViewCell.heightForTweetItem(dataSource.tweetItems[indexPath.row], andWidth: CGRectGetWidth(self.view.frame))
-        return optimalHeight
+        return MWTweetTableViewCell.heightForTweetItem(dataSource.tweetItems[indexPath.row], andWidth: CGRectGetWidth(self.view.frame))
     }
     
     //MARK: - Handle Button Taps
     @IBAction func composeButtonTapped() {
-        let tweetComposeController = ComposeViewController()
-        self.presentViewController(tweetComposeController, animated: true, completion: nil)
+        //Safety check to see if we have a logged in user to compose a tweet; I would also want to fail gracefully here in the event that we did not, for example by presenting a UIAlertViewController
+        if (dataSource.currentUser != nil) {
+            let tweetComposeController = ComposeViewController()
+            self.presentViewController(tweetComposeController, animated: true, completion: nil)
+        } else {
+            presentAlertViewController()
+        }
     }
     
     //MARK: - Handle table view interactions
@@ -77,6 +85,14 @@ class TweetStreamTableViewController: UITableViewController, DataSourceDelegate 
     //MARK: - DataSourceDelegate Methods
     func tweetItemsDidChange() {
         self.tableView.reloadData()
+    }
+    
+    //MARK: - Alert View Controller Methods
+    func presentAlertViewController() {
+        let alertVC = UIAlertController(title: "Error", message: "There is no logged in user to compose a tweet", preferredStyle: .Alert)
+        let alertButton = UIAlertAction(title: "OK", style: .Default, handler: nil)
+        alertVC.addAction(alertButton)
+        self.presentViewController(alertVC, animated: true, completion: nil)
     }
     
 

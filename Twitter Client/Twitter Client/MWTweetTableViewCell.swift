@@ -83,7 +83,6 @@ class MWTweetTableViewCell: UITableViewCell {
     }
     
     //MARK: - Working with layout of the items
-    
     class func heightForTweetItem(tweet: Tweet, andWidth width: CGFloat) -> CGFloat {
         let layoutCell: MWTweetTableViewCell = MWTweetTableViewCell(style: .Default, reuseIdentifier: "layoutCell")
         layoutCell.setTweetItem(tweet)
@@ -99,7 +98,6 @@ class MWTweetTableViewCell: UITableViewCell {
     }
     
     //MARK: - Working with drawing of objects 
-    
     func roundTheProfileImageView() {
         self.profilePictureImageView.layer.cornerRadius = profilePictureImageView.frame.size.height / 2 //to be round
         self.profilePictureImageView.layer.masksToBounds = true

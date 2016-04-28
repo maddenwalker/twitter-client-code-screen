@@ -8,8 +8,6 @@
 
 import UIKit
 
-let LoginViewControllerDidGetAccessTokenNotification = "LoginViewControllerDidGetAccessTokenNotification";
-
 class LoginViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var backgroundFilter: UIView!
     @IBOutlet weak var webViewBackground: UIWebView!
@@ -46,7 +44,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     }
     
     //MARK: - Working with the Status Bar Appearance
-    
     override func prefersStatusBarHidden() -> Bool {
         return true
     }
