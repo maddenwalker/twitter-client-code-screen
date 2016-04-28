@@ -44,7 +44,7 @@ class User: NSObject, NSCoding, UserType {
     convenience init?(initWithDictionary userDictionary: NSDictionary) {
         guard let username = userDictionary["screen_name"] as? String else { UserCreationError.InvalidUsername; return nil}
         guard let fullName = userDictionary["name"] as? String else { UserCreationError.InvalidFullname; return nil }
-        //Initializing with dummy data here; would normally request image from API using NSURL 
+        //Initializing with dummy data here; would normally store URL to image and then request image from API before storing; I would however still have a default picture in the event that I am not able to find a picture
         guard let profilePicture = UIImage(named: "Empty Profile Picture") else { UserCreationError.InvalidProfilePicture; return nil }
         
         self.init(username: username, fullName: fullName, profilePicture: profilePicture)

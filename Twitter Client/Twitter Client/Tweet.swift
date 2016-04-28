@@ -42,10 +42,10 @@ class Tweet: NSObject, NSCoding, TweetType {
     }
     
     convenience init?(initWithDictionary tweetDictionary: NSDictionary) {
-        guard let tweet = tweetDictionary["text"] as? String else { print("\(TweetCreationError.InvalidTweet)"); return nil }
-        guard let id = tweetDictionary["id"] as? Int else { print("\(TweetCreationError.InvalidSinceID)"); return nil }
-        guard let userDictionary = tweetDictionary["user"] as? NSDictionary else { print("\(TweetCreationError.InvalidUserDictionary)"); return nil }
-        guard let user = User(initWithDictionary: userDictionary) else { print("\(TweetCreationError.InvalidUser)"); return nil }
+        guard let tweet = tweetDictionary["text"] as? String else { TweetCreationError.InvalidTweet; return nil }
+        guard let id = tweetDictionary["id"] as? Int else { TweetCreationError.InvalidSinceID; return nil }
+        guard let userDictionary = tweetDictionary["user"] as? NSDictionary else { TweetCreationError.InvalidUserDictionary; return nil }
+        guard let user = User(initWithDictionary: userDictionary) else { TweetCreationError.InvalidUser; return nil }
         self.init(tweet: tweet, user: user, id: id)
     }
     
