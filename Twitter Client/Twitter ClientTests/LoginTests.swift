@@ -35,11 +35,4 @@ class LoginTests: XCTestCase {
         XCTAssert(DataSource.sharedInstance.userLoggedIn == true, "The user should not be considered logged in when there is no access token; in this case the access token is: \(accessToken)")
     }
     
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measureBlock {
-            // Put the code you want to measure the time of here.
-        }
-    }
-    
 }

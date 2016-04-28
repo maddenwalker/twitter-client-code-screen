@@ -13,6 +13,8 @@ import SwiftyJSON
 class DataSourceTests: XCTestCase {
     
     var jsonArray: [Dictionary<String,AnyObject>]?
+    var filePath = NSBundle.mainBundle().pathForResource("example_data", ofType: "json")
+    var json: JSON?
     
     override func setUp() {
         super.setUp()
@@ -24,12 +26,24 @@ class DataSourceTests: XCTestCase {
     }
     
     func testJSONIngestion() {
+        do {
+            json = try DataSource.sharedInstance.loadData(fromFilePath: filePath!)!
+            let screen_name = json![0]["user"]["screen_name"]
+            XCTAssert(screen_name == "OldGREG85", "The JSON data is not being parsed correctly, you are returning \(screen_name)")
+        } catch {
+            print("something went wrong")
+        }
     }
     
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measureBlock {
-            // Put the code you want to measure the time of here.
+    func testDictionaryParsing() {
+        do {
+        if let json = self.json {
+            let dictionaryArray = try DataSource.sharedInstance.parseJSONIntoDictionaryArray(json)
+            let screen_name = dictionaryArray![0]["user"]!["screen_name"]
+            XCTAssert( screen_name == "OldGREG85", "The dictionary is not correct, you are returning \(screen_name)")
+            }
+        } catch {
+            print("This is why we test, to catch errors")
         }
     }
     
