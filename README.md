@@ -20,7 +20,7 @@ TL;DR: Code Screen Creating a Simple Twitter-like Dummy Client
 - [x] As a user, I want to see a profile picture and name of the person who tweeted
 - [x] As a user, I want to post a tweet to the stream and see it appended to the top of the list
 - [x] As a user, I want to set a profile picture (question on whether we implement real API call for profile)
-- [ ] As a user, I want to see new tweets each time I open the app (on the backend I need to only query for new tweets from the API service)
+- [x] As a user, I want to see new tweets each time I open the app (on the backend I need to only query for new tweets from the API service)
 
 # Designs
 //As of April 19, 2016 TBD
