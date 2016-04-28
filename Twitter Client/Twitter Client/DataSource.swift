@@ -11,15 +11,24 @@ import Foundation
 import SwiftyJSON
 import KeychainAccess
 
+//!!!: I chose this as opposed to KVO because of the inherent one-to-one communication required
+protocol DataSourceDelegate {
+    func tweetItemsDidChange()
+}
+
+private enum ArchivingKeys: String {
+    case TweetItems
+    case UserItem
+}
+
 enum DataSourceError: ErrorType {
     case CannotReadData
     case CannotReadElementInJSON
 }
 
-//NOTE: I chose this as opposed to KVO because of the inherent one-to-one communication required
-protocol DataSourceDelegate {
-    func tweetItemsDidChange()
-}
+//Constants used for our KeychainAccess
+private let keychainServiceKey: String = "com.maddenwalker.twitter-client"
+private let accessTokenKey: String = "access token"
 
 class DataSource: NSObject {
 
@@ -34,11 +43,11 @@ class DataSource: NSObject {
     
     //Don't let others access this init
     private override init() {
-        keychain = Keychain(service: "com.maddenwalker.twitter-client")
+        keychain = Keychain(service: keychainServiceKey)
         
         super.init()
         
-        if ( keychain["access token"] != nil ) {
+        if ( keychain[accessTokenKey] != nil ) {
             userLoggedIn = true
             loadUserData()
         } else {
@@ -47,9 +56,9 @@ class DataSource: NSObject {
     }
     
     //MARK: - Logging user in Methods
-    
     func logUserIn(withUsername username: String) {
-        self.keychain["access token"] = "somerandomstringthatisservingasouraccesstokenfornowuntilwefullyimplement"
+        //!!!: This access token I would normally retrieve from the API call through either the Twitter SDK or some other means; I hardcoded it for example.
+        self.keychain[accessTokenKey] = "somerandomstringthatisservingasouraccesstokenfornowuntilwefullyimplement"
         self.userLoggedIn = true
         createLoggedInUserWithName(username)
         self.saveUserInfo()
@@ -59,14 +68,14 @@ class DataSource: NSObject {
     
     //MARK: - Working with logged in user
     func loadUserData() {
-        if let userFilePath = pathForFileName("userItem") {
+        if let userFilePath = pathForFileName(ArchivingKeys.UserItem.rawValue) {
             if let user = NSKeyedUnarchiver.unarchiveObjectWithFile(userFilePath) as? User {
                 self.currentUser = user
             }
         }
         
         //Load existing tweets
-        if let tweetFilePath = pathForFileName("tweetItems") {
+        if let tweetFilePath = pathForFileName(ArchivingKeys.TweetItems.rawValue) {
             if let savedTweets = NSKeyedUnarchiver.unarchiveObjectWithFile(tweetFilePath) as? [Tweet] {
                 if savedTweets.count > 0 {
                     self.tweetItems = savedTweets
@@ -78,19 +87,17 @@ class DataSource: NSObject {
     
     //MARK: - Logout Methods
     func logUserOut(completion: (() -> ())? ) {
-        self.keychain["access token"] = nil
+        self.keychain[accessTokenKey] = nil
         self.userLoggedIn = false
         self.tweetItems = []
         self.currentUser = nil
         deleteSavedData()
         delegate?.tweetItemsDidChange()
-        if let completion = completion {
-            completion()
-        }
+        completion?()
     }
     
     func deleteSavedData() {
-        if let tweetFilePath = pathForFileName("tweetItems") {
+        if let tweetFilePath = pathForFileName(ArchivingKeys.TweetItems.rawValue) {
             do {
                 try NSFileManager.defaultManager().removeItemAtPath(tweetFilePath)
             } catch {
@@ -98,7 +105,7 @@ class DataSource: NSObject {
             }
         }
         
-        if let userFilePath = pathForFileName("userItem") {
+        if let userFilePath = pathForFileName(ArchivingKeys.UserItem.rawValue) {
             do {
                 try NSFileManager.defaultManager().removeItemAtPath(userFilePath)
             } catch {
@@ -118,7 +125,7 @@ class DataSource: NSObject {
     
     //MARK: - Creation of new Tweet Methods
     func createTweetWithText(text: String, withUser user: User) {
-        //This is a hack as the server would add this
+        //This method is a hack as the server would hold this info about the tweet
         var newID: Int = 0
         if let id = self.tweetItems.first?.id {
             newID = id + 1
@@ -143,9 +150,7 @@ class DataSource: NSObject {
                 loadNewTweetWithIDGreaterThan(mostRecentID)
             }
         }
-        
         completion?()
-        
     }
     
     func submitNewItems(tweet: Tweet, completion: (() -> ())?) {
@@ -153,9 +158,7 @@ class DataSource: NSObject {
         self.tweetItems.append(tweet)
         sortArrayOfTweets()
         saveItems()
-        if let completion = completion {
-            completion()
-        }
+        completion?()
     }
     
     func loadNewTweetWithIDGreaterThan(id: Int) {
@@ -189,12 +192,13 @@ class DataSource: NSObject {
                 self.parseDictionaryArrayIntoTweets(dictionaryArray)
                 self.saveItems()
             } catch {
-                print("\(error)")
+                print("We have an error loading the dummy data: \(error)")
             }
         }
     }
     
     func createLoggedInUserWithName(username: String) {
+        //Another hack to create a default logged in user; this info would normamlly come from the API
         self.currentUser = User(username: username, fullName: "You", profilePicture: UIImage(named: "Empty Profile Picture")!)
     }
     
@@ -229,7 +233,7 @@ class DataSource: NSObject {
     
     func saveUserInfo() {
         if let user = self.currentUser {
-            if let filePath = pathForFileName("userItem") {
+            if let filePath = pathForFileName(ArchivingKeys.UserItem.rawValue) {
                 dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
                     NSKeyedArchiver.archiveRootObject(user, toFile: filePath)
                 })
@@ -245,7 +249,7 @@ class DataSource: NSObject {
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
                 let numberOfItemsToSave = min(self.tweetItems.count, 50)
                 let itemsToSave = Array(self.tweetItems[0..<numberOfItemsToSave])
-                guard let fullPath: String = self.pathForFileName("tweetItems") else { return }
+                guard let fullPath: String = self.pathForFileName(ArchivingKeys.TweetItems.rawValue) else { return }
                 NSKeyedArchiver.archiveRootObject(itemsToSave, toFile: fullPath)
             })
         }

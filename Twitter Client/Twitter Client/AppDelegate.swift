@@ -24,6 +24,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let navVC = storyBoard.instantiateInitialViewController() as? UINavigationController
             self.window?.rootViewController = navVC
         } else {
+            //If not we will present the login view controller
             let loginViewController = LoginViewController()
             self.window?.rootViewController = loginViewController
         }
