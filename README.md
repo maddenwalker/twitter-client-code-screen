@@ -1,23 +1,35 @@
 # twitter-client-code-screen
-TL;DR: Code Screen Creating a Simple Twitter-like Dummy Client
+TL;DR: Code Screen Creating a Simple Twitter-like Dummy Client. I implemented the application using a variety of techniques to show versatility; normally I would be more consistent with how things are done. 
 
 # Assumptions
 * Response format from Twitter server is JSON
-* Auth required for access to REST API
+* Auth required for access to REST API, would likely use the the Twitter SDK to leverage the system logins as opposed to implemented flow, this is a better user experience as user has already auth'ed their login with the system, and if not it falls back to OAUTH flow
 * `since_id` parameter may be used to query for just new data
+* One assumption that I want to make sure is clear is that I chose to implement different ways of doing things in Xcode. For example, sometimes I use Interface Builder, sometimes I altered views in code.  I did this to show my versatility.  Normally I would consistently use one type of implementation and actually use the best tool for the job (sometimes I like using IB to show others what the app looks like)
+* I've combined the data model to be contained in one main class, which if we were actually using the network, I would separate the logic out to it's own class and call it a NetworkAPI.  This would manage network comm, POST and GET requests, and manage the API responses. It would then communicate with the data model.
+* I've modeled the fetch of new tweets by adding an example JSON that would mimic the existence of new tweets.
+
+#Issues
+* I store my current tweet array using NSKeyedArchiver.  For some reason, upon reloading stopping and reloading the app, the current user information is different than what is contained in the tweet array user instance.  
 
 # User Stories
 
-- [ ] As a user, I want to log in to the application using my twitter credentials
-- [ ] As a user, I want to log out of the application
-- [ ] As a user, I want to see a list of tweets in reverse chronological order
-- [ ] As a user, I want to see a profile picture and name of the person who tweeted
-- [ ] As a user, I want to post a tweet to the stream and see it appended to the top of the list
-- [ ] As a user, I want to set a profile picture (question on whether we implement real API call for profile)
-- [ ] As a user, I want to see new tweets each time I open the app (on the backend I need to only query for new tweets from the API service)
+- [x] As a user, I want to log in to the application using my twitter credentials
+- [x] As a user, I want to log out of the application
+- [x] As a user, I want to see a list of tweets in reverse chronological order
+- [x] As a user, I want to see a profile picture and name of the person who tweeted
+- [x] As a user, I want to post a tweet to the stream and see it appended to the top of the list
+- [x] As a user, I want to set a profile picture (question on whether we implement real API call for profile)
+- [x] As a user, I want to see new tweets each time I open the app (on the backend I need to only query for new tweets from the API service)
 
 # Designs
 //As of April 19, 2016 TBD
+
+# Third Party Libraries used
+
+* [Alamofire](https://github.com/Alamofire/Alamofire "") - I did not actually use this because it is a dummy client, but would in a real situation as it is the defacto networking package for Swift
+* [KeychainAccess](https://github.com/kishikawakatsumi/KeychainAccess "") - Provides wrapper for iOS Keychain
+* [SwiftyJSON](https://github.com/SwiftyJSON/SwiftyJSON "") - Provides better support for unwrapping JSON objects
 
 # Example JSON Response [LINK TO DOCS](https://dev.twitter.com/rest/reference/get/statuses/home_timeline "")
 ```
