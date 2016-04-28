@@ -1,5 +1,5 @@
 # twitter-client-code-screen
-TL;DR: Code Screen Creating a Simple Twitter-like Dummy Client
+TL;DR: Code Screen Creating a Simple Twitter-like Dummy Client. I implemented the application using a variety of techniques to show versatility; normally I would be more consistent with how things are done. 
 
 # Assumptions
 * Response format from Twitter server is JSON

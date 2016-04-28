@@ -48,9 +48,10 @@ class DataSource: NSObject {
     
     //MARK: Notification Center
     
-    func logUserIn() {
+    func logUserIn(withUsername username: String) {
         self.keychain["access token"] = "somerandomstringthatisservingasouraccesstokenfornowuntilwefullyimplement"
         self.userLoggedIn = true
+        createLoggedInUserWithName(username)
         self.saveUserInfo()
         self.loadDummyData()
         self.delegate?.tweetItemsDidChange()
@@ -58,19 +59,37 @@ class DataSource: NSObject {
     
     //MARK: - Working with logged in user
     func loadUserData() {
-        if let fullPath = pathForFileName("userItem") {
-            if let user = NSKeyedUnarchiver.unarchiveObjectWithFile(fullPath) as? User {
+        if let userFilePath = pathForFileName("userItem") {
+            if let user = NSKeyedUnarchiver.unarchiveObjectWithFile(userFilePath) as? User {
                 self.currentUser = user
             }
         }
         
         //Load existing tweets
-        if let fullPath = pathForFileName("tweetItems") {
-            if let savedTweets = NSKeyedUnarchiver.unarchiveObjectWithFile(fullPath) as? [Tweet] {
+        if let tweetFilePath = pathForFileName("tweetItems") {
+            if let savedTweets = NSKeyedUnarchiver.unarchiveObjectWithFile(tweetFilePath) as? [Tweet] {
                 if savedTweets.count > 0 {
                     self.tweetItems = savedTweets
                     self.fetchNewItems(nil)
                 }
+            }
+        }
+    }
+    
+    func deleteUserData() {
+        if let tweetFilePath = pathForFileName("tweetItems") {
+            do {
+                try NSFileManager.defaultManager().removeItemAtPath(tweetFilePath)
+            } catch {
+                print("Could not delete your data for some reason; error: \(error)")
+            }
+        }
+        
+        if let userFilePath = pathForFileName("userItem") {
+            do {
+                try NSFileManager.defaultManager().removeItemAtPath(userFilePath)
+            } catch {
+                print("Could not delete your data for some reason; error: \(error)")
             }
         }
     }
@@ -83,14 +102,10 @@ class DataSource: NSObject {
         self.keychain["access token"] = nil
         self.userLoggedIn = false
         self.tweetItems = []
-        if let filePath = pathForFileName("tweetItems") {
-            do {
-                try NSFileManager.defaultManager().removeItemAtPath(filePath)
-            } catch {
-                print("Could not delete your data for some reason; error: \(error)")
-            }
-        }
-        completion()
+        self.currentUser = nil
+        deleteUserData()
+        delegate?.tweetItemsDidChange()
+          completion()
     }
     
     
@@ -234,4 +249,5 @@ class DataSource: NSObject {
             })
         }
     }
-}
+    
+ }

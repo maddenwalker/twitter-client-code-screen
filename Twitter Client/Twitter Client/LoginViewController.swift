@@ -59,10 +59,13 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     
     //MARK: - Login Actions
     func submitLogin() {
-        //We would receive an auth token here that would allow us to pass the variable through the notification center and our app delegate could then see that notification
-        NSNotificationCenter.defaultCenter().postNotificationName(LoginViewControllerDidGetAccessTokenNotification, object: nil)
-        if usernameTextField.text != nil {
-            dataSource.createLoggedInUserWithName(usernameTextField.text!)
+        if let username = usernameTextField.text {
+            dataSource.logUserIn(withUsername: username)
+            let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+            let mainStoryboard = UIStoryboard.init(name: "Main", bundle: nil)
+            let navVC = mainStoryboard.instantiateInitialViewController() as? UINavigationController
+            appDelegate.window?.rootViewController = navVC
+            appDelegate.window?.makeKeyAndVisible()
         }
     }
 }

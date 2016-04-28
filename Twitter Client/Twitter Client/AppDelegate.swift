@@ -17,7 +17,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         
         self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
-
         
         //Let's find out if our user is logged in already
         if dataSource.userLoggedIn {
@@ -27,7 +26,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         } else {
             let loginViewController = LoginViewController()
             self.window?.rootViewController = loginViewController
-            addObserverForLoginButtonPress()
         }
         
         self.window?.makeKeyAndVisible()
@@ -55,16 +53,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillTerminate(application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
-    
-    func addObserverForLoginButtonPress() {
-        NSNotificationCenter.defaultCenter().addObserverForName(LoginViewControllerDidGetAccessTokenNotification, object: nil, queue: nil, usingBlock: { (_) in
-            self.dataSource.logUserIn()
-            let storyBoard = UIStoryboard.init(name: "Main", bundle: nil)
-            let navVC = storyBoard.instantiateInitialViewController() as? UINavigationController
-            self.window?.rootViewController = navVC
-        })
-    }
-
 
 }
 

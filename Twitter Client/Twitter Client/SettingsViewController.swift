@@ -57,7 +57,6 @@ class SettingsViewController: UIViewController, UINavigationControllerDelegate, 
             let loginVC = LoginViewController()
             appDelegate.window?.rootViewController = loginVC
             appDelegate.window?.makeKeyAndVisible()
-            appDelegate.addObserverForLoginButtonPress()
         }
     }
 
