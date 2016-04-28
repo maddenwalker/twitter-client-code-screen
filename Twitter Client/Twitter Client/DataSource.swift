@@ -23,7 +23,7 @@ protocol DataSourceDelegate {
 
 class DataSource: NSObject {
 
-    var tweetItems: [Tweet]!
+    var tweetItems: [Tweet] = []
     static let sharedInstance = DataSource()
     
     var currentUser: User?
@@ -40,46 +40,41 @@ class DataSource: NSObject {
         
         if ( keychain["access token"] != nil ) {
             userLoggedIn = true
-            
-            if let fullPath = pathForFileName("userItem") {
-                if let user = NSKeyedUnarchiver.unarchiveObjectWithFile(fullPath) as? User {
-                    self.currentUser = user
-                }
-            }
-            
-            //Load existing tweets
-            if let fullPath = pathForFileName("tweetItems") {
-                if let savedTweets = NSKeyedUnarchiver.unarchiveObjectWithFile(fullPath) as? [Tweet] {
-                    if savedTweets.count > 0 {
-                        self.tweetItems = savedTweets
-                        //TODO: Request new items here
-                    } else {
-                        //Initialize the array if there are no items
-                        self.tweetItems = []
-                    }
-                }
-            }
-            
-            } else {
+            loadUserData()
+        } else {
             userLoggedIn = false
-            self.registerForAccessToken()
         }
     }
     
     //MARK: Notification Center
-    func registerForAccessToken() {
-        NSNotificationCenter.defaultCenter().addObserverForName(LoginViewControllerDidGetAccessTokenNotification, object: nil, queue: nil) { (_) in
-            //In a normal instance I would look for the variable passed here and set that as the access token so we could access that globally
-            self.keychain["access token"] = "somerandomstringthatisservingasouraccesstokenfornowuntilwefullyimplement"
-            self.userLoggedIn = true
-            self.tweetItems = []
-            self.saveUserInfo()
-            self.loadDummyData()
+    
+    func logUserIn() {
+        self.keychain["access token"] = "somerandomstringthatisservingasouraccesstokenfornowuntilwefullyimplement"
+        self.userLoggedIn = true
+        self.saveUserInfo()
+        self.loadDummyData()
+        self.delegate?.tweetItemsDidChange()
+    }
+    
+    //MARK: - Working with logged in user
+    func loadUserData() {
+        if let fullPath = pathForFileName("userItem") {
+            if let user = NSKeyedUnarchiver.unarchiveObjectWithFile(fullPath) as? User {
+                self.currentUser = user
+            }
+        }
+        
+        //Load existing tweets
+        if let fullPath = pathForFileName("tweetItems") {
+            if let savedTweets = NSKeyedUnarchiver.unarchiveObjectWithFile(fullPath) as? [Tweet] {
+                if savedTweets.count > 0 {
+                    self.tweetItems = savedTweets
+                    self.fetchNewItems(nil)
+                }
+            }
         }
     }
     
-    
-    //MARK: - Working with logged in user
     func resetUserLoggedInBool() {
         userLoggedIn = !userLoggedIn
     }
@@ -88,7 +83,6 @@ class DataSource: NSObject {
         self.keychain["access token"] = nil
         self.userLoggedIn = false
         self.tweetItems = []
-        delegate?.tweetItemsDidChange()
         if let filePath = pathForFileName("tweetItems") {
             do {
                 try NSFileManager.defaultManager().removeItemAtPath(filePath)
@@ -125,7 +119,16 @@ class DataSource: NSObject {
     }
     
     //MARK: - Working with Data
-    func fetchNewItems(completion: () -> ()) {
+    func fetchNewItems(completion: (() -> ())?) {
+        //Normally I would query the API here in a separate class.  For the purposes of this dummy client, I will simply query the file system repeatedly and load the example new tweet; I would also only use the since_id parameter to fetch only tweets that are newer than what we have already
+        if self.tweetItems.count > 0 {
+            //They are already sorted so I just grab the first in the stack
+            if let mostRecentID = self.tweetItems[0].id {
+                loadNewTweetWithIDGreaterThan(mostRecentID)
+            }
+        }
+        
+        completion?()
         
     }
     
@@ -142,6 +145,20 @@ class DataSource: NSObject {
     //Simple function to load dummy data here; would be replaced with networking call off main thread
     func loadDummyData() {
         if let JSONFilePath = NSBundle.mainBundle().pathForResource("example_data", ofType: "json") {
+            do {
+                guard let json = try self.loadData(fromFilePath: JSONFilePath) else { return }
+                guard let dictionaryArray = try self.parseJSONIntoDictionaryArray(json) else { return }
+                self.parseDictionaryArrayIntoTweets(dictionaryArray)
+                self.saveItems()
+            } catch {
+                print("\(error)")
+            }
+        }
+    }
+    
+    func loadNewTweetWithIDGreaterThan(id: Int) {
+        //This is such a hack and sorry for lack of anything cool here.  The ID stays constant as it is generated from the json table.  That means if you tweet after loading this, your tweet will always show on top (the ID will then always be 1 greater)
+        if let JSONFilePath = NSBundle.mainBundle().pathForResource("example_new_data", ofType: "json") {
             do {
                 guard let json = try self.loadData(fromFilePath: JSONFilePath) else { return }
                 guard let dictionaryArray = try self.parseJSONIntoDictionaryArray(json) else { return }

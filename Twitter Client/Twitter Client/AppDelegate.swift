@@ -12,21 +12,18 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-    var navVC: UINavigationController?
     let dataSource = DataSource.sharedInstance
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         
         self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
-        
-        let storyBoard = UIStoryboard.init(name: "Main", bundle: nil)
-        navVC = storyBoard.instantiateInitialViewController() as? UINavigationController
+
         
         //Let's find out if our user is logged in already
         if dataSource.userLoggedIn {
-            if let navVC = navVC {
-                self.window?.rootViewController = navVC
-            }
+            let storyBoard = UIStoryboard.init(name: "Main", bundle: nil)
+            let navVC = storyBoard.instantiateInitialViewController() as? UINavigationController
+            self.window?.rootViewController = navVC
         } else {
             let loginViewController = LoginViewController()
             self.window?.rootViewController = loginViewController
@@ -61,7 +58,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func addObserverForLoginButtonPress() {
         NSNotificationCenter.defaultCenter().addObserverForName(LoginViewControllerDidGetAccessTokenNotification, object: nil, queue: nil, usingBlock: { (_) in
-            self.window?.rootViewController = self.navVC
+            self.dataSource.logUserIn()
+            let storyBoard = UIStoryboard.init(name: "Main", bundle: nil)
+            let navVC = storyBoard.instantiateInitialViewController() as? UINavigationController
+            self.window?.rootViewController = navVC
         })
     }
 

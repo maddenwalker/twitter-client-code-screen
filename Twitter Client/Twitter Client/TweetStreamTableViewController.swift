@@ -17,10 +17,15 @@ class TweetStreamTableViewController: UITableViewController, DataSourceDelegate 
         dataSource.delegate = self
         //Make sure we show the navigation bar
         navigationController?.navigationBar.hidden = false
-        self.title = "Your Awesome Tweet Feed"
+        self.title = "Feed"
         self.navigationController?.navigationBar.barTintColor = trovColorBlue
         self.tableView.tableFooterView = UIView(frame: CGRectZero) //Get rid of the separators between empty cells
         self.tableView.separatorColor = UIColor.lightGrayColor() //Make the separators less intrusive
+        
+        //Add support for fetching new items from JSON array with Refresh control
+        self.refreshControl = UIRefreshControl()
+        self.refreshControl?.addTarget(self, action: #selector(self.refreshControlDidFire(_:)), forControlEvents: .ValueChanged)
+        
         
         self.tableView.registerClass(MWTweetTableViewCell.self, forCellReuseIdentifier: "tweetCell")
     }
@@ -61,6 +66,15 @@ class TweetStreamTableViewController: UITableViewController, DataSourceDelegate 
     @IBAction func composeButtonTapped() {
         let tweetComposeController = ComposeViewController()
         self.presentViewController(tweetComposeController, animated: true, completion: nil)
+    }
+    
+    //MARK: - Handle table view interactions
+    
+    func refreshControlDidFire(sender: UIRefreshControl) {
+        dataSource.fetchNewItems { 
+            sender.endRefreshing()
+            self.tableView.reloadData()
+        }
     }
     
     //MARK: - DataSourceDelegate Methods
