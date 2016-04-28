@@ -82,14 +82,14 @@ class DataSource: NSObject {
         self.userLoggedIn = false
         self.tweetItems = []
         self.currentUser = nil
-        deleteUserData()
+        deleteSavedData()
         delegate?.tweetItemsDidChange()
         if let completion = completion {
             completion()
         }
     }
     
-    func deleteUserData() {
+    func deleteSavedData() {
         if let tweetFilePath = pathForFileName("tweetItems") {
             do {
                 try NSFileManager.defaultManager().removeItemAtPath(tweetFilePath)
@@ -173,7 +173,6 @@ class DataSource: NSObject {
     }
     
     func sortArrayOfTweets() {
-        //This is a good place to sort the data
         self.tweetItems.sortInPlace({ (tweet1, tweet2) -> Bool in
             return tweet1.id > tweet2.id
         })
@@ -181,7 +180,7 @@ class DataSource: NSObject {
     
     //MARK: - Creating Dummmy Data and User
     
-    //Simple function to load dummy data here; would be replaced with networking call off main thread
+    //Simple function to load dummy data here; would be replaced with networking call off main thread in separate NetworkAPI class
     func loadDummyData() {
         if let JSONFilePath = NSBundle.mainBundle().pathForResource("example_data", ofType: "json") {
             do {

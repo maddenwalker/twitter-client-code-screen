@@ -152,6 +152,7 @@
 			isa = PBXGroup;
 			children = (
 				8C3949281CCE74DE0010AF0B /* AppDelegate.swift */,
+				8C81F32C1CD297A400945445 /* Constants */,
 				8C3949571CCE781B0010AF0B /* Models */,
 				8C3949561CCE780C0010AF0B /* Controllers */,
 				8C3949601CCEA0020010AF0B /* Views */,
@@ -199,7 +200,6 @@
 			isa = PBXGroup;
 			children = (
 				8C3949581CCE782F0010AF0B /* User.swift */,
-				8CC36A5F1CD121BA00732CF5 /* Colors.swift */,
 				8C7CCDE01CCFC37B00CC538F /* Tweet.swift */,
 				8C3949631CCEA3F10010AF0B /* DataSource.swift */,
 			);
@@ -214,6 +214,14 @@
 				8C39495E1CCE9FF80010AF0B /* LoginView.xib */,
 			);
 			name = Views;
+			sourceTree = "<group>";
+		};
+		8C81F32C1CD297A400945445 /* Constants */ = {
+			isa = PBXGroup;
+			children = (
+				8CC36A5F1CD121BA00732CF5 /* Colors.swift */,
+			);
+			name = Constants;
 			sourceTree = "<group>";
 		};
 		8CABDB511CCEC52A0071C47D /* Supporting Files */ = {

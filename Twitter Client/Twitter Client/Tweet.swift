@@ -15,6 +15,12 @@ protocol TweetType {
     var id: Int! { get }
 }
 
+private enum SerializationKeys: String {
+    case Text
+    case User
+    case ID
+}
+
 enum TweetCreationError: ErrorType {
     case InvalidTweet
     case InvalidUserDictionary
@@ -44,9 +50,9 @@ class Tweet: NSObject, NSCoding, TweetType {
     }
     
     required init?(coder aDecoder: NSCoder) {
-        guard let tweet = aDecoder.decodeObjectForKey("text") as? String else { TweetCreationError.InvalidTweet; return nil}
-        guard let user = aDecoder.decodeObjectForKey("user") as? User else { TweetCreationError.InvalidUser; return nil }
-        guard let id = aDecoder.decodeObjectForKey("id") as? Int else { TweetCreationError.InvalidSinceID; return nil }
+        guard let tweet = aDecoder.decodeObjectForKey(SerializationKeys.Text.rawValue) as? String else { TweetCreationError.InvalidTweet; return nil}
+        guard let user = aDecoder.decodeObjectForKey(SerializationKeys.User.rawValue) as? User else { TweetCreationError.InvalidUser; return nil }
+        guard let id = aDecoder.decodeObjectForKey(SerializationKeys.ID.rawValue) as? Int else { TweetCreationError.InvalidSinceID; return nil }
         
         self.tweet = tweet
         self.user = user
@@ -54,9 +60,9 @@ class Tweet: NSObject, NSCoding, TweetType {
     }
     
     func encodeWithCoder(aCoder: NSCoder) {
-        aCoder.encodeObject(self.tweet, forKey: "text")
-        aCoder.encodeObject(self.user, forKey: "user")
-        aCoder.encodeObject(self.id, forKey: "id")
+        aCoder.encodeObject(self.tweet, forKey: SerializationKeys.Text.rawValue)
+        aCoder.encodeObject(self.user, forKey: SerializationKeys.User.rawValue)
+        aCoder.encodeObject(self.id, forKey: SerializationKeys.ID.rawValue)
     }
 
 }

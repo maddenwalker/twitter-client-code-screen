@@ -36,7 +36,6 @@ class TweetStreamTableViewController: UITableViewController, DataSourceDelegate 
     }
 
     // MARK: - Table view data source
-
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
     }
@@ -62,14 +61,12 @@ class TweetStreamTableViewController: UITableViewController, DataSourceDelegate 
     }
     
     //MARK: - Handle Button Taps
-    
     @IBAction func composeButtonTapped() {
         let tweetComposeController = ComposeViewController()
         self.presentViewController(tweetComposeController, animated: true, completion: nil)
     }
     
     //MARK: - Handle table view interactions
-    
     func refreshControlDidFire(sender: UIRefreshControl) {
         dataSource.fetchNewItems { 
             sender.endRefreshing()
@@ -78,7 +75,6 @@ class TweetStreamTableViewController: UITableViewController, DataSourceDelegate 
     }
     
     //MARK: - DataSourceDelegate Methods
-    
     func tweetItemsDidChange() {
         self.tableView.reloadData()
     }

@@ -47,7 +47,6 @@ class ComposeViewController: UIViewController, UITextViewDelegate {
     }
     
     //MARK: - Construction of UI elements
-
     func setupViewsInController() {
         //Init
         self.profileImageView = UIImageView(frame: CGRectMake(0, 0, 60, 60))
@@ -95,7 +94,6 @@ class ComposeViewController: UIViewController, UITextViewDelegate {
     }
     
     //MARK: - Handle Button Taps
-    
     func cancelButtonTapped() {
         self.dismissViewControllerAnimated(true, completion: nil)
     }
@@ -132,7 +130,6 @@ class ComposeViewController: UIViewController, UITextViewDelegate {
     }
     
     //MARK: - Working with auto layout
-    
     func layoutItemsInView() {
         let viewMargins = self.view.layoutMarginsGuide
         //Setup Cancel button

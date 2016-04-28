@@ -7,6 +7,5 @@
 //
 
 import UIKit
-import Foundation
 
 let trovColorBlue: UIColor = UIColor(colorLiteralRed: 17.0 / 255.0, green: 133.0 / 255.0, blue: 208.0 / 255.0, alpha: 1) //Trov Blue

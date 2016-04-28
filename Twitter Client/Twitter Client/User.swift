@@ -10,17 +10,23 @@ import UIKit
 import Foundation
 import SwiftyJSON
 
+protocol UserType {
+    var username: String { get }
+    var fullName: String { get }
+    var profilePicture: UIImage { get }
+}
+
+private enum SerializationKeys: String {
+    case Username
+    case Name
+    case ProfilePicture
+}
+
 enum UserCreationError: ErrorType {
     case InvalidUsername
     case InvalidFullname
     case InvalidProfilePicture
     case InitializationFromCoderInvalid
-}
-
-protocol UserType {
-    var username: String { get }
-    var fullName: String { get }
-    var profilePicture: UIImage { get }
 }
 
 class User: NSObject, NSCoding, UserType {
@@ -32,7 +38,7 @@ class User: NSObject, NSCoding, UserType {
         self.username = username
         self.fullName = fullName
         self.profilePicture = profilePicture
-//        super.init()
+        super.init()
     }
     
     convenience init?(initWithDictionary userDictionary: NSDictionary) {
@@ -45,9 +51,9 @@ class User: NSObject, NSCoding, UserType {
     }
     
     required init?(coder aDecoder: NSCoder) {
-        guard let username = aDecoder.decodeObjectForKey("screen_name") as? String else { UserCreationError.InitializationFromCoderInvalid; return nil}
-        guard let fullName = aDecoder.decodeObjectForKey("name") as? String else { UserCreationError.InitializationFromCoderInvalid; return nil }
-        guard let profilePicture = aDecoder.decodeObjectForKey("profile_picture") as? UIImage else { UserCreationError.InitializationFromCoderInvalid; return nil }
+        guard let username = aDecoder.decodeObjectForKey(SerializationKeys.Username.rawValue) as? String else { UserCreationError.InitializationFromCoderInvalid; return nil}
+        guard let fullName = aDecoder.decodeObjectForKey(SerializationKeys.Name.rawValue) as? String else { UserCreationError.InitializationFromCoderInvalid; return nil }
+        guard let profilePicture = aDecoder.decodeObjectForKey(SerializationKeys.ProfilePicture.rawValue) as? UIImage else { UserCreationError.InitializationFromCoderInvalid; return nil }
         
         self.username = username
         self.fullName = fullName
@@ -55,9 +61,9 @@ class User: NSObject, NSCoding, UserType {
     }
     
     func encodeWithCoder(aCoder: NSCoder) {
-        aCoder.encodeObject(self.username, forKey: "screen_name")
-        aCoder.encodeObject(self.fullName, forKey: "name")
-        aCoder.encodeObject(self.profilePicture, forKey: "profile_picture")
+        aCoder.encodeObject(self.username, forKey: SerializationKeys.Username.rawValue)
+        aCoder.encodeObject(self.fullName, forKey: SerializationKeys.Name.rawValue)
+        aCoder.encodeObject(self.profilePicture, forKey: SerializationKeys.ProfilePicture.rawValue)
     }
 
 }

@@ -55,8 +55,9 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="tp7-IS-JOG">
+                            <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="tp7-IS-JOG">
                                 <rect key="frame" x="20" y="72" width="100" height="100"/>
+                                <gestureRecognizers/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="100" id="Bnh-me-Ijo"/>
                                     <constraint firstAttribute="height" constant="100" id="K2G-YR-jSs"/>
@@ -106,9 +107,6 @@
                             <constraint firstAttribute="trailingMargin" secondItem="XLY-a8-nqe" secondAttribute="trailing" constant="-20" id="uz8-t8-HiY"/>
                             <constraint firstItem="XLY-a8-nqe" firstAttribute="leading" secondItem="z8w-yT-Mzn" secondAttribute="leadingMargin" constant="-20" id="vop-4F-h2m"/>
                         </constraints>
-                        <connections>
-                            <outletCollection property="gestureRecognizers" destination="N0k-qV-W2z" appends="YES" id="bLp-Gw-qf6"/>
-                        </connections>
                     </view>
                     <connections>
                         <outlet property="profileImageView" destination="tp7-IS-JOG" id="7Sa-Vz-otZ"/>
@@ -117,7 +115,6 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="y4w-km-bLH" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <tapGestureRecognizer id="N0k-qV-W2z"/>
             </objects>
             <point key="canvasLocation" x="1322" y="387"/>
         </scene>

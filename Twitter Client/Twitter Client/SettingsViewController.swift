@@ -17,6 +17,7 @@ class SettingsViewController: UIViewController, UINavigationControllerDelegate, 
     let sharedInstance = DataSource.sharedInstance
     
     var imagePickerController: UIImagePickerController!
+    var tapGestureRecognizer: UITapGestureRecognizer!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,7 +37,8 @@ class SettingsViewController: UIViewController, UINavigationControllerDelegate, 
         imagePickerController = UIImagePickerController()
         imagePickerController.delegate = self
         
-        //TODO: Setup tap gesture recognizer on ImageView
+        tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.editButtonTapped))
+        profileImageView.addGestureRecognizer(tapGestureRecognizer)
     }
 
     override func didReceiveMemoryWarning() {
@@ -45,7 +47,7 @@ class SettingsViewController: UIViewController, UINavigationControllerDelegate, 
     }
     
     
-    
+    //MARK: - Handle Button Taps
     @IBAction func editButtonTapped() {
         self.navigationController?.presentViewController(imagePickerController, animated: false, completion: nil)
     }
@@ -59,6 +61,7 @@ class SettingsViewController: UIViewController, UINavigationControllerDelegate, 
             appDelegate.window?.makeKeyAndVisible()
         }
     }
+    
 
     //MARK - UIImagePickerControllerDelegate Methods
     func imagePickerControllerDidCancel(picker: UIImagePickerController) {
