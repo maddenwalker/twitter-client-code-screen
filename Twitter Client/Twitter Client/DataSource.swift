@@ -46,7 +46,7 @@ class DataSource: NSObject {
         }
     }
     
-    //MARK: Notification Center
+    //MARK: - Logging user in Methods
     
     func logUserIn(withUsername username: String) {
         self.keychain["access token"] = "somerandomstringthatisservingasouraccesstokenfornowuntilwefullyimplement"
@@ -76,6 +76,19 @@ class DataSource: NSObject {
         }
     }
     
+    //MARK: - Logout Methods
+    func logUserOut(completion: (() -> ())? ) {
+        self.keychain["access token"] = nil
+        self.userLoggedIn = false
+        self.tweetItems = []
+        self.currentUser = nil
+        deleteUserData()
+        delegate?.tweetItemsDidChange()
+        if let completion = completion {
+            completion()
+        }
+    }
+    
     func deleteUserData() {
         if let tweetFilePath = pathForFileName("tweetItems") {
             do {
@@ -94,21 +107,7 @@ class DataSource: NSObject {
         }
     }
     
-    func resetUserLoggedInBool() {
-        userLoggedIn = !userLoggedIn
-    }
-    
-    func logUserOut(completion: () -> Void ) {
-        self.keychain["access token"] = nil
-        self.userLoggedIn = false
-        self.tweetItems = []
-        self.currentUser = nil
-        deleteUserData()
-        delegate?.tweetItemsDidChange()
-          completion()
-    }
-    
-    
+    //MARK: - Updating User State Methods
     func updateCurrentUserWith(image: UIImage) {
         self.currentUser?.profilePicture = image
         self.delegate?.tweetItemsDidChange()
@@ -116,6 +115,8 @@ class DataSource: NSObject {
         saveItems()
     }
     
+    
+    //MARK: - Creation of new Tweet Methods
     func createTweetWithText(text: String, withUser user: User) {
         //This is a hack as the server would add this
         var newID: Int = 0
@@ -157,20 +158,6 @@ class DataSource: NSObject {
         }
     }
     
-    //Simple function to load dummy data here; would be replaced with networking call off main thread
-    func loadDummyData() {
-        if let JSONFilePath = NSBundle.mainBundle().pathForResource("example_data", ofType: "json") {
-            do {
-                guard let json = try self.loadData(fromFilePath: JSONFilePath) else { return }
-                guard let dictionaryArray = try self.parseJSONIntoDictionaryArray(json) else { return }
-                self.parseDictionaryArrayIntoTweets(dictionaryArray)
-                self.saveItems()
-            } catch {
-                print("\(error)")
-            }
-        }
-    }
-    
     func loadNewTweetWithIDGreaterThan(id: Int) {
         //This is such a hack and sorry for lack of anything cool here.  The ID stays constant as it is generated from the json table.  That means if you tweet after loading this, your tweet will always show on top (the ID will then always be 1 greater)
         if let JSONFilePath = NSBundle.mainBundle().pathForResource("example_new_data", ofType: "json") {
@@ -185,7 +172,28 @@ class DataSource: NSObject {
         }
     }
     
-    //MARK: - Creating Dummmy User
+    func sortArrayOfTweets() {
+        //This is a good place to sort the data
+        self.tweetItems.sortInPlace({ (tweet1, tweet2) -> Bool in
+            return tweet1.id > tweet2.id
+        })
+    }
+    
+    //MARK: - Creating Dummmy Data and User
+    
+    //Simple function to load dummy data here; would be replaced with networking call off main thread
+    func loadDummyData() {
+        if let JSONFilePath = NSBundle.mainBundle().pathForResource("example_data", ofType: "json") {
+            do {
+                guard let json = try self.loadData(fromFilePath: JSONFilePath) else { return }
+                guard let dictionaryArray = try self.parseJSONIntoDictionaryArray(json) else { return }
+                self.parseDictionaryArrayIntoTweets(dictionaryArray)
+                self.saveItems()
+            } catch {
+                print("\(error)")
+            }
+        }
+    }
     
     func createLoggedInUserWithName(username: String) {
         self.currentUser = User(username: username, fullName: "You", profilePicture: UIImage(named: "Empty Profile Picture")!)
@@ -209,12 +217,6 @@ class DataSource: NSObject {
         sortArrayOfTweets()
     }
     
-    func sortArrayOfTweets() {
-        //This is a good place to sort the data
-        self.tweetItems.sortInPlace({ (tweet1, tweet2) -> Bool in
-            return tweet1.id > tweet2.id
-        })
-    }
     
     //MARK: - Working with the file system
     

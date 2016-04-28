@@ -7,11 +7,9 @@
 //
 
 import XCTest
-import KeychainAccess
 @testable import Twitter_Client
 
 class LoginTests: XCTestCase {
-    let keychain = Keychain(service: "com.maddenwalker.twitter-client")
     
     override func setUp() {
         super.setUp()
@@ -22,17 +20,17 @@ class LoginTests: XCTestCase {
         super.tearDown()
     }
     
-    //These tests will not pass cocurrently as the app is required to be restarted as the keychain is altered on load and analyzed
-    func testNoAccessToken() {
-        keychain["access token"] = nil
-        let accessToken = keychain["access token"]
-        XCTAssert(DataSource.sharedInstance.userLoggedIn == false, "The user should not be considered logged in when there is no access token; in this case the access token is: \(accessToken)")
+    func testLogout() {
+        DataSource.sharedInstance.logUserOut(nil)
+        XCTAssert(DataSource.sharedInstance.userLoggedIn == false, "The user should not be considered logged in")
+        XCTAssert(DataSource.sharedInstance.tweetItems.count == 0, "There should not be any tweet items when the user logs out")
     }
     
-    func testAccessTokenPresent() {
-        keychain["access token"] = "sometesttokentoshowweareloggedin"
-        let accessToken = keychain["access token"]
-        XCTAssert(DataSource.sharedInstance.userLoggedIn == true, "The user should not be considered logged in when there is no access token; in this case the access token is: \(accessToken)")
+    func testLogin() {
+        DataSource.sharedInstance.logUserIn(withUsername: "test_user")
+        XCTAssert(DataSource.sharedInstance.userLoggedIn == true, "The user should be considered logged in")
+        XCTAssert(DataSource.sharedInstance.tweetItems.count != 0, "There should tweet items when the user logs in")
     }
+    
     
 }
